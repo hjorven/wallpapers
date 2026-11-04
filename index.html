@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wallpapers · Hjorven</title>
+<meta name="description" content="A growing collection of 1-bit engraving wallpapers by Hjorven, free to download.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#10112c">
+<style>
+  @font-face { font-family: "Instrument Serif"; src: url("fonts/instrument-serif-latin-400-normal.woff2") format("woff2"); font-display: swap; }
+  @font-face { font-family: "Instrument Serif"; font-style: italic; src: url("fonts/instrument-serif-latin-400-italic.woff2") format("woff2"); font-display: swap; }
+  @font-face { font-family: "Plex Mono"; src: url("fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2"); font-display: swap; }
+  :root { --ink: #10112c; --line: #2d3070; --paper: #e9e9f5; --muted: #a9abd6; --accent: #2424ff; --accent-text: #8a8aff; }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body { margin: 0; background: var(--ink); color: var(--paper); font: 15px/1.5 "Plex Mono", ui-monospace, monospace; }
+  a { color: inherit; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+  nav { border-bottom: 1px solid var(--line); }
+  nav .wrap { display: flex; justify-content: space-between; align-items: center; height: 64px; }
+  nav a { text-decoration: none; }
+  .logo { font-family: "Instrument Serif", serif; font-size: 24px; line-height: .85; }
+  .logo small { display: block; font: 9px/1 "Plex Mono", monospace; letter-spacing: .3em; color: var(--muted); margin-top: 4px; }
+  .navlinks { display: flex; gap: 20px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+  .navlinks a:hover { color: var(--accent-text); }
+  h1 { font: 400 clamp(48px, 9vw, 96px)/.95 "Instrument Serif", serif; margin: 56px 0 14px; }
+  h1 em { color: var(--accent-text); }
+  .lead { color: var(--muted); max-width: 62ch; margin: 0; }
+  .index { list-style: none; padding: 0; margin: 36px 0 0; border-top: 1px solid var(--line); }
+  .index li { border-bottom: 1px solid var(--line); }
+  .index a { display: grid; grid-template-columns: 3ch 1fr auto; gap: 16px; align-items: baseline; padding: 14px 0; text-decoration: none; }
+  .index a:hover b { color: var(--accent-text); }
+  .index b { font: 400 26px/1.1 "Instrument Serif", serif; }
+  .index span { color: var(--muted); font-size: 12px; }
+  .set { padding: 72px 0 0; }
+  .set header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px 24px; margin-bottom: 28px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+  .set h2 { font: 400 clamp(34px, 5vw, 52px)/1 "Instrument Serif", serif; margin: 0 0 8px; }
+  .set h2 em { color: var(--accent-text); }
+  .meta { color: var(--muted); font-size: 12px; margin: 0; max-width: 64ch; }
+  .btn { display: inline-block; border: 1px solid var(--paper); padding: 10px 16px; text-decoration: none; text-transform: uppercase; font-size: 11px; letter-spacing: .14em; white-space: nowrap; }
+  .btn:hover { background: var(--paper); color: var(--ink); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 32px 20px; }
+  figure { margin: 0; }
+  figure img { width: 100%; height: auto; display: block; border: 1px solid var(--line); transition: border-color .2s; }
+  figure > a:hover img, figure > a:focus-visible img { border-color: var(--c); }
+  figcaption { display: grid; gap: 2px; margin-top: 10px; font-size: 12px; letter-spacing: .04em; }
+  figcaption b { display: flex; align-items: center; gap: 8px; font-weight: 400; }
+  .sw { width: 10px; height: 10px; background: var(--c); display: inline-block; }
+  figcaption > span { color: var(--muted); }
+  .dl { display: flex; gap: 8px; margin-top: 8px; }
+  .dl a { flex: 1; text-align: center; border: 1px solid var(--line); color: var(--paper); text-decoration: none; padding: 9px 0; text-transform: uppercase; font-size: 10px; letter-spacing: .14em; }
+  .dl a:hover, .dl a:focus-visible { border-color: var(--c); }
+  .howto { margin: 40px 0 0; padding: 20px 24px; border: 1px dashed var(--line); max-width: 74ch; }
+  .howto h3 { margin: 0 0 8px; font: 400 22px/1.2 "Instrument Serif", serif; }
+  .howto ol { color: var(--muted); padding-left: 20px; margin: 0; }
+  footer { margin-top: 96px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-top: 20px; padding-bottom: 40px; }
+  :focus-visible { outline: 2px solid var(--accent-text); outline-offset: 2px; }
+  @media (max-width: 520px) { .navlinks a.gh { display: none; } .index a { grid-template-columns: 3ch 1fr; } .index a span:last-child { grid-column: 2; } }
+</style>
+</head>
+<body>
+<nav><div class="wrap"><a class="logo" href="https://hjorven.github.io/">HJORVEN<small>WALLPAPERS</small></a>
+  <span class="navlinks"><a href="https://hjorven.github.io/">Portfolio</a><a class="gh" href="https://github.com/hjorven/wallpapers">Source</a></span></div></nav>
+<main class="wrap">
+  <h1>Wall&shy;papers <em>collection</em></h1>
+  <p class="lead">1-bit engravings in the Officina style, free to download and use. Every set lists the device it was made for and its exact resolution. New sets get added here over time.</p>
+  <ol class="index">
+    <li><a href="#officina-ipad"><span>01</span><b>Officina &middot; iPad Safari</b><span>12 colours &middot; 24 images</span></a></li>
+  </ol>
+
+  <section class="set" id="officina-ipad">
+    <header>
+      <div>
+        <h2>Officina <em>for iPad</em></h2>
+        <p class="meta">Twelve engravings for the Safari start page, each with its own planet and building, one per accent colour of the portfolio. 2160 &times; 1620 landscape and 1620 &times; 2160 portrait, made for the iPad (9th generation).</p>
+      </div>
+      <a class="btn" href="sets/officina-ipad/officina-ipad-all.zip" download>All 24 as ZIP &middot; 3 MB</a>
+    </header>
+    <div class="grid">
+      <figure style="--c:#2424ff">
+        <a href="sets/officina-ipad/full/01-cobalt-quer.png"><img src="sets/officina-ipad/thumbs/01-cobalt-quer.jpg" alt="Cobalt: Ringed planet and Temple" width="480" height="360" loading="lazy"></a>
+        <figcaption><b><i class="sw"></i>01 &middot; Cobalt</b><span>Ringed planet &middot; Temple</span>
+          <span class="dl"><a href="sets/officina-ipad/full/01-cobalt-quer.png" download>Landscape</a><a href="sets/officina-ipad/full/01-cobalt-hoch.png" download>Portrait</a></span></figcaption>
+      </figure>
+      <figure style="--c:#7a2cff">
+        <a href="sets/officina-ipad/full/02-violet-quer.png"><img src="sets/officina-ipad/thumbs/02-violet-quer.jpg" alt="Violet: Three moons and Obelisk" width="480" height="360" loading="lazy"></a>
+        <figcaption><b><i class="sw"></i>02 &middot; Violet</b><span>Three moons &middot; Obelisk</span>
+          <span class="dl"><a href="sets/officina-ipad/full/02-violet-quer.png" download>Landscape</a><a href="sets/officina-ipad/full/02-violet-hoch.png" download>Portrait</a></span></figcaption>
+      </figure>
+      <figure style="--c:#b02be3">
+        <a href="sets/officina-ipad/full/03-purple-quer.png"><img src="sets/officina-ipad/thumbs/03-purple-quer.jpg" alt="Purple: Crescent moon and Step pyramid" width="480" height="360" loading="lazy"></a>
+        <figcaption><b><i class="sw"></i>03 &middot; Purple</b><span>Crescent moon &middot; Step pyramid</span>
+          <span class="dl"><a href="sets/officina-ipad/full/03-purple-quer.png" download>Landscape</a><a href="sets/officina-ipad/full/03-purple-hoch.png" download>Portrait</a></span></figcaption>
+      </figure>
+      <figure style="--c:#ff2e93">
+        <a href="sets/officina-ipad/full/04-magenta-quer.png"><img src="sets/officina-ipad/thumbs/04-magenta-quer.jpg" alt="Magenta: Tilted rings and Triumphal arch" width="480" height="360" loading="lazy"></a>
+        <figcaption><b><i class="sw"></i>04 &middot; Magenta</b><span>Tilted rings &middot; Triumphal arch</span>
+          <span class="dl"><a href="sets/officina-ipad/full/04-magenta-quer.png" download>Landscape</a><a href="sets/officina-ipad/full/04-magenta-hoch.png" download>Portrait</a></span></figcaption>
+      </figure>
+      <figure style="--c:#d6143c">
+        <a href="sets/officina-ipad/full/05-crimson-quer.png"><img src="sets/officina-ipad/thumbs/05-crimson-quer.jpg" alt="Crimson: Cratered moon and Column ruins" width="480" height="360" loading="lazy"></a>
+        <figcaption><b><i class="sw"></i>05 &middot; Crimson</b><span>Cratered moon &middot; Column ruins</span>
+          <span class="dl"><a href="sets/officina-ipad/full/05-crimson-quer.png" download>Landscape</a><a href="sets/officina-ipad/full/05-crimson-hoch.png" download>Portrait</a></span></figcaption>
+      </figure>
+      <figure style="--c:#ee3a17">
+        <a href="sets/officina-ipad/full/06-vermilion-quer.png"><img src="sets/officina-ipad/thumbs/06-vermilion-quer.jpg" alt="Vermilion: Sun and Lighthouse" width="480" height="360" loading="lazy"></a>
+        <figcaption><b><i class="sw"></i>06 &middot; Vermilion</b><span>Sun &middot; Lighthouse</span>
+          <span class="dl"><a href="sets/officina-ipad/full/06-vermilion-quer.png" download>Landscape</a><a href="sets/officina-ipad/full/06-vermilion-hoch.png" download>Portrait</a></span></figcaption>
+      </figure>
+      <figure style="--c:#ff7a00">
+        <a href="sets/officina-ipad/full/07-orange-quer.png"><img src="sets/officina-ipad/thumbs/07-orange-quer.jpg" alt="Orange: Banded giant and Pyramids" width="480" height="360" loading="lazy"></a>
+        <figcaption><b><i class="sw"></i>07 &middot; Orange</b><span>Banded giant &middot; Pyramids</span>
+          <span class="dl"><a href="sets/officina-ipad/full/07-orange-quer.png" download>Landscape</a><a href="sets/officina-ipad/full/07-orange-hoch.png" download>Portrait</a></span></figcaption>
+      </figure>
+      <figure style="--c:#f2b200">
+        <a href="sets/officina-ipad/full/08-gold-quer.png"><img src="sets/officina-ipad/thumbs/08-gold-quer.jpg" alt="Gold: Armillary sphere and Tholos" width="480" height="360" loading="lazy"></a>
+        <figcaption><b><i class="sw"></i>08 &middot; Gold</b><span>Armillary sphere &middot; Tholos</span>
+          <span class="dl"><a href="sets/officina-ipad/full/08-gold-quer.png" download>Landscape</a><a href="sets/officina-ipad/full/08-gold-hoch.png" download>Portrait</a></span></figcaption>
+      </figure>
+      <figure style="--c:#9bd400">
+        <a href="sets/officina-ipad/full/09-lime-quer.png"><img src="sets/officina-ipad/thumbs/09-lime-quer.jpg" alt="Lime: Moon with ring and Colosseum" width="480" height="360" loading="lazy"></a>
+        <figcaption><b><i class="sw"></i>09 &middot; Lime</b><span>Moon with ring &middot; Colosseum</span>
+          <span class="dl"><a href="sets/officina-ipad/full/09-lime-quer.png" download>Landscape</a><a href="sets/officina-ipad/full/09-lime-hoch.png" download>Portrait</a></span></figcaption>
+      </figure>
+      <figure style="--c:#1fb043">
+        <a href="sets/officina-ipad/full/10-green-quer.png"><img src="sets/officina-ipad/thumbs/10-green-quer.jpg" alt="Green: Ring world and Stone circle" width="480" height="360" loading="lazy"></a>
+        <figcaption><b><i class="sw"></i>10 &middot; Green</b><span>Ring world &middot; Stone circle</span>
+          <span class="dl"><a href="sets/officina-ipad/full/10-green-quer.png" download>Landscape</a><a href="sets/officina-ipad/full/10-green-hoch.png" download>Portrait</a></span></figcaption>
+      </figure>
+      <figure style="--c:#10b08b">
+        <a href="sets/officina-ipad/full/11-patina-quer.png"><img src="sets/officina-ipad/thumbs/11-patina-quer.jpg" alt="Patina: Faceted planet and Observatory" width="480" height="360" loading="lazy"></a>
+        <figcaption><b><i class="sw"></i>11 &middot; Patina</b><span>Faceted planet &middot; Observatory</span>
+          <span class="dl"><a href="sets/officina-ipad/full/11-patina-quer.png" download>Landscape</a><a href="sets/officina-ipad/full/11-patina-hoch.png" download>Portrait</a></span></figcaption>
+      </figure>
+      <figure style="--c:#00a8dc">
+        <a href="sets/officina-ipad/full/12-turquoise-quer.png"><img src="sets/officina-ipad/thumbs/12-turquoise-quer.jpg" alt="Turquoise: Ocean planet and Ring portal" width="480" height="360" loading="lazy"></a>
+        <figcaption><b><i class="sw"></i>12 &middot; Turquoise</b><span>Ocean planet &middot; Ring portal</span>
+          <span class="dl"><a href="sets/officina-ipad/full/12-turquoise-quer.png" download>Landscape</a><a href="sets/officina-ipad/full/12-turquoise-hoch.png" download>Portrait</a></span></figcaption>
+      </figure>
+    </div>
+    <div class="howto">
+      <h3>Set it as the Safari background</h3>
+      <ol>
+        <li>Tap Landscape or Portrait, then hold the image and choose Save to Photos.</li>
+        <li>In Safari, open a new tab, tap Edit at the bottom of the start page and turn on Background Image.</li>
+        <li>Tap + and pick the wallpaper.</li>
+      </ol>
+    </div>
+  </section>
+</main>
+<footer><div class="wrap"><span>Hjorven &middot; MMXXVI</span><span><a href="https://hjorven.github.io/">Portfolio</a> &nbsp;&middot;&nbsp; <a href="https://github.com/hjorven/wallpapers">GitHub</a> &nbsp;&middot;&nbsp; <a href="#">Back to top</a></span></div></footer>
+</body>
+</html>
