@@ -25,6 +25,7 @@ def main():
 
     data = json.loads((ROOT / "wallpapers.json").read_text(encoding="utf-8"))
     errors, made = [], []
+    changed = [False]
 
     def need(cond, msg):
         if not cond:
@@ -50,6 +51,13 @@ def main():
             need(img.get("orientation") in ORIENTATIONS, f"{wid}: orientation must be one of {sorted(ORIENTATIONS)}")
             if not need(src.is_file(), f"{wid}: file not found: {img['src']}"):
                 continue
+            size = src.stat().st_size
+            if img.get("bytes") != size:
+                if check_only:
+                    need(False, f"{wid}: bytes for {img['src']} is out of date (run without --check)")
+                else:
+                    img["bytes"] = size
+                    changed[0] = True
             with Image.open(src) as im:
                 need(im.size == (img["width"], img["height"]),
                      f"{wid}: {img['src']} is {im.size[0]}x{im.size[1]}, wallpapers.json says {img['width']}x{img['height']}")
@@ -86,6 +94,9 @@ def main():
                         zf.writestr(info, f.read_bytes())
                 made.append(pack["zip"])
 
+    if changed[0]:
+        (ROOT / "wallpapers.json").write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        made.append("wallpapers.json (file sizes)")
     for m in made:
         print("made", m)
     if errors:

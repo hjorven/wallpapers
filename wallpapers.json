@@ -103,14 +103,16 @@
           "width": 2160,
           "height": 1620,
           "src": "themes/officina/ipad/full/01-cobalt-quer.png",
-          "thumb": "themes/officina/ipad/thumbs/01-cobalt-quer.jpg"
+          "thumb": "themes/officina/ipad/thumbs/01-cobalt-quer.jpg",
+          "bytes": 149968
         },
         {
           "orientation": "portrait",
           "width": 1620,
           "height": 2160,
           "src": "themes/officina/ipad/full/01-cobalt-hoch.png",
-          "thumb": "themes/officina/ipad/thumbs/01-cobalt-hoch.jpg"
+          "thumb": "themes/officina/ipad/thumbs/01-cobalt-hoch.jpg",
+          "bytes": 142384
         }
       ]
     },
@@ -132,14 +134,16 @@
           "width": 2160,
           "height": 1620,
           "src": "themes/officina/ipad/full/02-violet-quer.png",
-          "thumb": "themes/officina/ipad/thumbs/02-violet-quer.jpg"
+          "thumb": "themes/officina/ipad/thumbs/02-violet-quer.jpg",
+          "bytes": 143068
         },
         {
           "orientation": "portrait",
           "width": 1620,
           "height": 2160,
           "src": "themes/officina/ipad/full/02-violet-hoch.png",
-          "thumb": "themes/officina/ipad/thumbs/02-violet-hoch.jpg"
+          "thumb": "themes/officina/ipad/thumbs/02-violet-hoch.jpg",
+          "bytes": 136535
         }
       ]
     },
@@ -161,14 +165,16 @@
           "width": 2160,
           "height": 1620,
           "src": "themes/officina/ipad/full/03-purple-quer.png",
-          "thumb": "themes/officina/ipad/thumbs/03-purple-quer.jpg"
+          "thumb": "themes/officina/ipad/thumbs/03-purple-quer.jpg",
+          "bytes": 142535
         },
         {
           "orientation": "portrait",
           "width": 1620,
           "height": 2160,
           "src": "themes/officina/ipad/full/03-purple-hoch.png",
-          "thumb": "themes/officina/ipad/thumbs/03-purple-hoch.jpg"
+          "thumb": "themes/officina/ipad/thumbs/03-purple-hoch.jpg",
+          "bytes": 135657
         }
       ]
     },
@@ -190,14 +196,16 @@
           "width": 2160,
           "height": 1620,
           "src": "themes/officina/ipad/full/04-magenta-quer.png",
-          "thumb": "themes/officina/ipad/thumbs/04-magenta-quer.jpg"
+          "thumb": "themes/officina/ipad/thumbs/04-magenta-quer.jpg",
+          "bytes": 143377
         },
         {
           "orientation": "portrait",
           "width": 1620,
           "height": 2160,
           "src": "themes/officina/ipad/full/04-magenta-hoch.png",
-          "thumb": "themes/officina/ipad/thumbs/04-magenta-hoch.jpg"
+          "thumb": "themes/officina/ipad/thumbs/04-magenta-hoch.jpg",
+          "bytes": 134257
         }
       ]
     },
@@ -219,14 +227,16 @@
           "width": 2160,
           "height": 1620,
           "src": "themes/officina/ipad/full/05-crimson-quer.png",
-          "thumb": "themes/officina/ipad/thumbs/05-crimson-quer.jpg"
+          "thumb": "themes/officina/ipad/thumbs/05-crimson-quer.jpg",
+          "bytes": 141123
         },
         {
           "orientation": "portrait",
           "width": 1620,
           "height": 2160,
           "src": "themes/officina/ipad/full/05-crimson-hoch.png",
-          "thumb": "themes/officina/ipad/thumbs/05-crimson-hoch.jpg"
+          "thumb": "themes/officina/ipad/thumbs/05-crimson-hoch.jpg",
+          "bytes": 133204
         }
       ]
     },
@@ -248,14 +258,16 @@
           "width": 2160,
           "height": 1620,
           "src": "themes/officina/ipad/full/06-vermilion-quer.png",
-          "thumb": "themes/officina/ipad/thumbs/06-vermilion-quer.jpg"
+          "thumb": "themes/officina/ipad/thumbs/06-vermilion-quer.jpg",
+          "bytes": 141622
         },
         {
           "orientation": "portrait",
           "width": 1620,
           "height": 2160,
           "src": "themes/officina/ipad/full/06-vermilion-hoch.png",
-          "thumb": "themes/officina/ipad/thumbs/06-vermilion-hoch.jpg"
+          "thumb": "themes/officina/ipad/thumbs/06-vermilion-hoch.jpg",
+          "bytes": 133880
         }
       ]
     },
@@ -277,14 +289,16 @@
           "width": 2160,
           "height": 1620,
           "src": "themes/officina/ipad/full/07-orange-quer.png",
-          "thumb": "themes/officina/ipad/thumbs/07-orange-quer.jpg"
+          "thumb": "themes/officina/ipad/thumbs/07-orange-quer.jpg",
+          "bytes": 141139
         },
         {
           "orientation": "portrait",
           "width": 1620,
           "height": 2160,
           "src": "themes/officina/ipad/full/07-orange-hoch.png",
-          "thumb": "themes/officina/ipad/thumbs/07-orange-hoch.jpg"
+          "thumb": "themes/officina/ipad/thumbs/07-orange-hoch.jpg",
+          "bytes": 134290
         }
       ]
     },
@@ -306,14 +320,16 @@
           "width": 2160,
           "height": 1620,
           "src": "themes/officina/ipad/full/08-gold-quer.png",
-          "thumb": "themes/officina/ipad/thumbs/08-gold-quer.jpg"
+          "thumb": "themes/officina/ipad/thumbs/08-gold-quer.jpg",
+          "bytes": 144867
         },
         {
           "orientation": "portrait",
           "width": 1620,
           "height": 2160,
           "src": "themes/officina/ipad/full/08-gold-hoch.png",
-          "thumb": "themes/officina/ipad/thumbs/08-gold-hoch.jpg"
+          "thumb": "themes/officina/ipad/thumbs/08-gold-hoch.jpg",
+          "bytes": 138678
         }
       ]
     },
@@ -335,14 +351,16 @@
           "width": 2160,
           "height": 1620,
           "src": "themes/officina/ipad/full/09-lime-quer.png",
-          "thumb": "themes/officina/ipad/thumbs/09-lime-quer.jpg"
+          "thumb": "themes/officina/ipad/thumbs/09-lime-quer.jpg",
+          "bytes": 143802
         },
         {
           "orientation": "portrait",
           "width": 1620,
           "height": 2160,
           "src": "themes/officina/ipad/full/09-lime-hoch.png",
-          "thumb": "themes/officina/ipad/thumbs/09-lime-hoch.jpg"
+          "thumb": "themes/officina/ipad/thumbs/09-lime-hoch.jpg",
+          "bytes": 140005
         }
       ]
     },
@@ -364,14 +382,16 @@
           "width": 2160,
           "height": 1620,
           "src": "themes/officina/ipad/full/10-green-quer.png",
-          "thumb": "themes/officina/ipad/thumbs/10-green-quer.jpg"
+          "thumb": "themes/officina/ipad/thumbs/10-green-quer.jpg",
+          "bytes": 141300
         },
         {
           "orientation": "portrait",
           "width": 1620,
           "height": 2160,
           "src": "themes/officina/ipad/full/10-green-hoch.png",
-          "thumb": "themes/officina/ipad/thumbs/10-green-hoch.jpg"
+          "thumb": "themes/officina/ipad/thumbs/10-green-hoch.jpg",
+          "bytes": 137899
         }
       ]
     },
@@ -393,14 +413,16 @@
           "width": 2160,
           "height": 1620,
           "src": "themes/officina/ipad/full/11-patina-quer.png",
-          "thumb": "themes/officina/ipad/thumbs/11-patina-quer.jpg"
+          "thumb": "themes/officina/ipad/thumbs/11-patina-quer.jpg",
+          "bytes": 141464
         },
         {
           "orientation": "portrait",
           "width": 1620,
           "height": 2160,
           "src": "themes/officina/ipad/full/11-patina-hoch.png",
-          "thumb": "themes/officina/ipad/thumbs/11-patina-hoch.jpg"
+          "thumb": "themes/officina/ipad/thumbs/11-patina-hoch.jpg",
+          "bytes": 135847
         }
       ]
     },
@@ -422,14 +444,16 @@
           "width": 2160,
           "height": 1620,
           "src": "themes/officina/ipad/full/12-turquoise-quer.png",
-          "thumb": "themes/officina/ipad/thumbs/12-turquoise-quer.jpg"
+          "thumb": "themes/officina/ipad/thumbs/12-turquoise-quer.jpg",
+          "bytes": 148546
         },
         {
           "orientation": "portrait",
           "width": 1620,
           "height": 2160,
           "src": "themes/officina/ipad/full/12-turquoise-hoch.png",
-          "thumb": "themes/officina/ipad/thumbs/12-turquoise-hoch.jpg"
+          "thumb": "themes/officina/ipad/thumbs/12-turquoise-hoch.jpg",
+          "bytes": 140761
         }
       ]
     }

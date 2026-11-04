@@ -3,297 +3,391 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Wallpapers · Hjorven</title>
-<meta name="description" content="A growing collection of 1-bit engraving wallpapers by Hjorven, sorted by theme, device and colour. Free to download.">
+<title>Wallpapers</title>
+<meta name="description" content="A collection of wallpapers by hjorven, sorted by theme, device and colour. Free to download.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="icon" href="favicon.ico" sizes="32x32">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="theme-color" content="#10112c">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f6f6f6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#141414" media="(prefers-color-scheme: dark)">
 <link rel="preload" href="wallpapers.json" as="fetch" crossorigin>
 <style>
-  @font-face { font-family: "Instrument Serif"; src: url("fonts/instrument-serif-latin-400-normal.woff2") format("woff2"); font-display: swap; }
-  @font-face { font-family: "Instrument Serif"; font-style: italic; src: url("fonts/instrument-serif-latin-400-italic.woff2") format("woff2"); font-display: swap; }
-  @font-face { font-family: "Plex Mono"; src: url("fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2"); font-display: swap; }
-  :root { --ink: #10112c; --ink-2: #161838; --line: #2d3070; --paper: #e9e9f5; --muted: #a9abd6; --accent-text: #8a8aff; }
+  :root {
+    --bg: #f6f6f6; --surface: #ffffff; --text: #1a1a1a; --muted: #666666; --line: #e2e2e2; --line-strong: #c4c4c4;
+    --chip: #ececec; --chip-on: #1a1a1a; --chip-on-text: #ffffff; --shadow: 0 1px 2px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.06);
+    --radius: 10px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141414; --surface: #1c1c1c; --text: #ededed; --muted: #a0a0a0; --line: #2a2a2a; --line-strong: #444444;
+      --chip: #262626; --chip-on: #ededed; --chip-on-text: #141414; --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 24px rgba(0,0,0,.3);
+    }
+  }
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
-  body { margin: 0; background: var(--ink); color: var(--paper); font: 15px/1.5 "Plex Mono", ui-monospace, monospace; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
   a { color: inherit; }
   button { font: inherit; color: inherit; }
-  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+  :focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 16px; }
   .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  :focus-visible { outline: 2px solid var(--accent-text); outline-offset: 2px; }
+  [hidden] { display: none !important; }
 
-  nav { border-bottom: 1px solid var(--line); }
-  nav .wrap { display: flex; justify-content: space-between; align-items: center; height: 64px; }
-  nav a { text-decoration: none; }
-  .logo { font-family: "Instrument Serif", serif; font-size: 24px; line-height: .85; }
-  .logo small { display: block; font: 9px/1 "Plex Mono", monospace; letter-spacing: .3em; color: var(--muted); margin-top: 4px; }
-  .navlinks { display: flex; gap: 20px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
-  .navlinks a:hover { color: var(--accent-text); }
+  /* header */
+  .top { border-bottom: 1px solid var(--line); background: var(--surface); }
+  .top .wrap { display: flex; align-items: center; justify-content: space-between; height: 56px; gap: 16px; }
+  .brand { font-weight: 600; letter-spacing: -.01em; text-decoration: none; }
+  .brand span { color: var(--muted); font-weight: 400; }
+  .top nav { display: flex; gap: 18px; font-size: 14px; color: var(--muted); }
+  .top nav a { text-decoration: none; }
+  .top nav a:hover { color: var(--text); }
+  .intro { padding-top: 36px; padding-bottom: 8px; }
+  h1 { font-size: clamp(28px, 4vw, 36px); line-height: 1.15; letter-spacing: -.02em; margin: 0 0 6px; font-weight: 650; }
+  .intro p { margin: 0; color: var(--muted); max-width: 60ch; }
 
-  h1 { font: 400 clamp(48px, 9vw, 96px)/.95 "Instrument Serif", serif; margin: 56px 0 14px; }
-  h1 em { color: var(--accent-text); }
-  .lead { color: var(--muted); max-width: 62ch; margin: 0; }
-  .stats { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 24px 0 0; padding: 0; list-style: none; font-size: 12px; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
-  .stats b { color: var(--paper); font: 400 28px/1 "Instrument Serif", serif; margin-right: 6px; letter-spacing: 0; }
+  /* themes */
+  h2.label { font-size: 13px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin: 28px 0 12px; }
+  .themes { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+  .tcard { display: flex; gap: 12px; align-items: center; padding: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); cursor: pointer; text-align: left; width: 100%; }
+  .tcard:hover { border-color: var(--line-strong); }
+  .tcard[aria-pressed="true"] { border-color: var(--text); }
+  .tcard .stack { display: grid; grid-template-columns: repeat(3, 28px); gap: 3px; flex: none; }
+  .tcard .stack img { width: 28px; height: 38px; object-fit: cover; border-radius: 3px; display: block; }
+  .tcard b { display: block; font-weight: 600; }
+  .tcard small { display: block; color: var(--muted); font-size: 13px; }
 
-  /* theme index */
-  .eyebrow { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin: 56px 0 14px; }
-  .themes { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
-  .tcard { display: block; text-decoration: none; border: 1px solid var(--line); background: var(--ink-2); transition: border-color .2s; }
-  .tcard:hover, .tcard[aria-current="true"] { border-color: var(--paper); }
-  .mosaic { display: grid; grid-template-columns: repeat(4, 1fr); aspect-ratio: 4 / 1.5; overflow: hidden; border-bottom: 1px solid var(--line); }
-  .mosaic img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .tcard div.t { padding: 14px 16px 16px; }
-  .tcard b { display: block; font: 400 28px/1.05 "Instrument Serif", serif; }
-  .tcard span { display: block; color: var(--muted); font-size: 12px; margin-top: 4px; }
-  .tcard .dots { display: flex; gap: 4px; margin-top: 10px; }
-  .tcard .dots i { width: 10px; height: 10px; display: block; }
+  /* toolbar */
+  .bar { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--bg) 90%, transparent); backdrop-filter: saturate(1.2) blur(8px); margin-top: 24px; border-bottom: 1px solid var(--line); }
+  .bar .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; padding-top: 10px; padding-bottom: 10px; }
+  .group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+  .group > span { font-size: 13px; color: var(--muted); margin-right: 2px; }
+  .seg { display: inline-flex; background: var(--chip); border-radius: 999px; padding: 3px; gap: 2px; }
+  .seg button { border: 0; background: none; padding: 5px 12px; border-radius: 999px; font-size: 13px; cursor: pointer; min-height: 30px; }
+  .seg button[aria-pressed="true"] { background: var(--chip-on); color: var(--chip-on-text); }
+  .dots { display: inline-flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .dot { width: 32px; height: 32px; border-radius: 50%; border: 2px solid transparent; padding: 3px; background: none; cursor: pointer; display: grid; place-items: center; }
+  .dot i { width: 100%; height: 100%; border-radius: 50%; background: var(--c); display: block; box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); }
+  .dot[aria-pressed="true"] { border-color: var(--text); }
+  .dot.all i { background: conic-gradient(#e0261f, #f2b200, #4cbf1a, #00a8c8, #2424ff, #8a2cf0, #ff2e93, #e0261f); }
+  .count { margin-left: auto; font-size: 13px; color: var(--muted); }
+  .linkbtn { border: 0; background: none; padding: 0; text-decoration: underline; color: var(--muted); font-size: 13px; cursor: pointer; }
 
-  /* filters */
-  .filters { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--ink) 92%, transparent); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); margin-top: 56px; }
-  .filters .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; padding-top: 12px; padding-bottom: 12px; }
-  fieldset { border: 0; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-width: 0; }
-  fieldset[hidden], .filters[hidden] { display: none; }
-  legend { float: left; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-right: 6px; padding: 0; }
-  .chip { border: 1px solid var(--line); background: none; padding: 6px 10px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; min-height: 32px; }
-  .chip:hover { border-color: var(--muted); }
-  .chip[aria-pressed="true"] { border-color: var(--paper); background: var(--paper); color: var(--ink); }
-  .sw { width: 32px; height: 32px; border: 1px solid var(--line); padding: 0; cursor: pointer; position: relative; background: none; display: grid; place-items: center; }
-  .sw i { width: 18px; height: 18px; display: block; background: var(--c); }
-  .sw[aria-pressed="true"] { border-color: var(--paper); box-shadow: inset 0 0 0 2px var(--ink); }
-  .count { margin-left: auto; font-size: 12px; color: var(--muted); }
-  .reset { background: none; border: 0; text-decoration: underline; cursor: pointer; font-size: 12px; color: var(--muted); padding: 0; }
-  .reset[hidden] { display: none; }
+  /* gallery */
+  .theme { padding-top: 36px; scroll-margin-top: 70px; }
+  .theme-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; margin-bottom: 4px; }
+  .theme-head h2 { font-size: 22px; letter-spacing: -.01em; margin: 0; font-weight: 650; }
+  .theme-head p { margin: 0; color: var(--muted); font-size: 14px; }
+  .theme > p.desc { color: var(--muted); margin: 0 0 16px; max-width: 70ch; font-size: 14px; }
+  .pack { margin-top: 18px; }
+  .pack-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; margin-bottom: 12px; font-size: 14px; }
+  .pack-head .dev { color: var(--muted); }
+  .pack-head .dev b { color: var(--text); font-weight: 600; }
+  .acts { display: flex; flex-wrap: wrap; gap: 6px; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line-strong); background: var(--surface); padding: 7px 12px; border-radius: 8px; text-decoration: none; font-size: 13px; cursor: pointer; white-space: nowrap; }
+  .btn:hover { border-color: var(--text); }
+  .btn.primary { background: var(--chip-on); color: var(--chip-on-text); border-color: var(--chip-on); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 20px 14px; }
+  .grid.portrait { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+  .tile { display: block; width: 100%; padding: 0; border: 0; background: none; text-align: left; cursor: pointer; }
+  .tile .img { display: block; border-radius: var(--radius); overflow: hidden; background: var(--line); box-shadow: var(--shadow); transition: transform .2s ease, box-shadow .2s ease; }
+  .tile:hover .img { transform: translateY(-2px); box-shadow: var(--shadow), 0 0 0 2px var(--c); }
+  .tile img { display: block; width: 100%; height: auto; }
+  .tile .cap { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 14px; }
+  .tile .cap i { width: 10px; height: 10px; border-radius: 50%; background: var(--c); flex: none; }
+  .tile .cap span { color: var(--muted); font-size: 12px; margin-left: auto; white-space: nowrap; }
+  .tile .sub { display: block; color: var(--muted); font-size: 13px; margin-top: 1px; }
+  .empty { padding: 48px 0; color: var(--muted); }
+  .add { margin: 64px 0 0; padding: 18px 20px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); font-size: 14px; color: var(--muted); max-width: 72ch; }
+  .add b { color: var(--text); }
+  .add code { font: 13px ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--text); }
+  footer { margin-top: 64px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; padding-top: 18px; padding-bottom: 32px; }
 
-  /* sections */
-  .theme { padding: 64px 0 0; scroll-margin-top: 80px; }
-  .theme > header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px 24px; margin-bottom: 28px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
-  .theme h2 { font: 400 clamp(36px, 5vw, 56px)/1 "Instrument Serif", serif; margin: 0 0 8px; }
-  .theme h2 em { color: var(--accent-text); }
-  .meta { color: var(--muted); font-size: 12px; margin: 0; max-width: 64ch; }
-  .acts { display: flex; flex-wrap: wrap; gap: 8px; }
-  .btn { display: inline-block; border: 1px solid var(--line); padding: 10px 14px; text-decoration: none; text-transform: uppercase; font-size: 11px; letter-spacing: .12em; white-space: nowrap; }
-  .btn.solid { border-color: var(--paper); }
-  .btn:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
-  .pack + .pack { margin-top: 40px; }
-  .pack h3 { font: 400 22px/1.2 "Instrument Serif", serif; margin: 0 0 16px; color: var(--muted); }
-  .pack h3 b { color: var(--paper); font-weight: 400; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 32px 20px; }
-  .grid.portrait { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
-  figure { margin: 0; }
-  figure > a { display: block; }
-  figure img { width: 100%; height: auto; display: block; border: 1px solid var(--line); background: var(--ink-2); transition: border-color .2s; }
-  figure > a:hover img, figure > a:focus-visible img { border-color: var(--c); }
-  figcaption { display: grid; gap: 2px; margin-top: 10px; font-size: 12px; letter-spacing: .03em; }
-  figcaption b { display: flex; align-items: center; gap: 8px; font-weight: 400; }
-  figcaption b i { width: 10px; height: 10px; background: var(--c); display: inline-block; flex: none; }
-  figcaption > span { color: var(--muted); }
-  .dl { display: flex; gap: 8px; margin-top: 8px; }
-  .dl a { flex: 1; text-align: center; border: 1px solid var(--line); text-decoration: none; padding: 9px 0; text-transform: uppercase; font-size: 10px; letter-spacing: .12em; }
-  .dl a small { display: block; font-size: 9px; letter-spacing: .04em; color: var(--muted); text-transform: none; margin-top: 1px; }
-  .dl a:hover, .dl a:focus-visible { border-color: var(--c); }
-  .howto { margin: 36px 0 0; padding: 18px 22px; border: 1px dashed var(--line); max-width: 74ch; }
-  .howto summary { cursor: pointer; font: 400 20px/1.2 "Instrument Serif", serif; }
-  .howto ol { color: var(--muted); padding-left: 20px; margin: 10px 0 0; }
-  .empty { padding: 64px 0; color: var(--muted); }
-  .empty[hidden] { display: none; }
-  .add { margin: 96px 0 0; padding: 24px; border: 1px solid var(--line); max-width: 74ch; }
-  .add h2 { font: 400 28px/1.1 "Instrument Serif", serif; margin: 0 0 8px; }
-  .add p { color: var(--muted); margin: 0; font-size: 13px; }
-  .add code { color: var(--paper); }
+  /* detail */
+  dialog { border: 0; padding: 0; background: var(--surface); color: var(--text); border-radius: 14px; width: min(1180px, calc(100vw - 32px)); max-width: none; max-height: calc(100dvh - 32px); box-shadow: 0 20px 60px rgba(0,0,0,.35); overflow: hidden; }
+  dialog::backdrop { background: rgba(10,10,10,.6); backdrop-filter: blur(4px); }
+  .detail { display: grid; grid-template-columns: minmax(0, 1fr) 340px; height: min(820px, calc(100dvh - 32px)); }
+  .stage { position: relative; display: grid; grid-template-rows: 1fr auto; place-items: center; gap: 14px; padding: 24px 24px 16px; min-height: 0; background: var(--stage, #111); transition: background .3s; }
+  .stage img { max-width: 100%; max-height: 100%; width: auto; height: auto; min-height: 0; display: block; border-radius: 6px; box-shadow: 0 10px 40px rgba(0,0,0,.45); object-fit: contain; }
+  .stage .pic { min-height: 0; height: 100%; width: 100%; display: grid; place-items: center; }
+  .stage .nav { position: absolute; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; border: 0; background: rgba(255,255,255,.14); color: #fff; cursor: pointer; font-size: 22px; line-height: 1; display: grid; place-items: center; }
+  .stage .nav:hover { background: rgba(255,255,255,.28); }
+  .stage .prev { left: 12px; } .stage .next { right: 12px; }
+  .stage .seg { background: rgba(255,255,255,.12); }
+  .stage .seg button { color: #fff; }
+  .stage .seg button[aria-pressed="true"] { background: #fff; color: #111; }
+  .info { padding: 22px 22px 24px; overflow-y: auto; border-left: 1px solid var(--line); display: flex; flex-direction: column; gap: 18px; }
+  .info header { display: flex; justify-content: space-between; align-items: start; gap: 12px; }
+  .eyebrow { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+  .info h3 { font-size: 26px; line-height: 1.15; letter-spacing: -.02em; margin: 2px 0 0; font-weight: 650; }
+  .close { border: 0; background: var(--chip); width: 34px; height: 34px; border-radius: 50%; cursor: pointer; font-size: 20px; line-height: 1; flex: none; }
+  .colour { display: flex; align-items: center; gap: 12px; }
+  .colour i { width: 44px; height: 44px; border-radius: 10px; background: var(--c); box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); flex: none; }
+  .colour b { display: block; font-weight: 600; }
+  .colour button { border: 0; background: none; padding: 0; font: 13px ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted); cursor: pointer; text-decoration: underline dotted; }
+  dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; font-size: 14px; }
+  dt { color: var(--muted); }
+  dd { margin: 0; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tags span { background: var(--chip); border-radius: 999px; padding: 3px 10px; font-size: 13px; }
+  .files { display: grid; gap: 8px; }
+  .file { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; text-decoration: none; }
+  .file:hover { border-color: var(--text); }
+  .file .shape { width: 22px; border: 2px solid currentColor; border-radius: 3px; flex: none; opacity: .7; }
+  .file b { font-weight: 600; font-size: 14px; display: block; }
+  .file small { color: var(--muted); font-size: 12px; }
+  .file .go { margin-left: auto; font-size: 13px; color: var(--muted); }
+  details.howto { font-size: 14px; color: var(--muted); }
+  details.howto summary { cursor: pointer; color: var(--text); }
+  details.howto ol { padding-left: 18px; margin: 8px 0 0; }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--chip-on); color: var(--chip-on-text); padding: 8px 14px; border-radius: 999px; font-size: 13px; z-index: 20; }
 
-  footer { margin-top: 96px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
-  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-top: 20px; padding-bottom: 40px; }
-  @media (max-width: 600px) {
-    .navlinks a.gh { display: none; }
-    .filters { position: static; }
-    .count { margin-left: 0; width: 100%; }
+  @media (max-width: 860px) {
+    dialog { width: 100vw; max-height: 100dvh; height: 100dvh; border-radius: 0; }
+    .detail { grid-template-columns: 1fr; grid-template-rows: auto auto; height: 100dvh; overflow-y: auto; }
+    .stage { padding: 16px 16px 12px; height: 62dvh; }
+    .info { border-left: 0; border-top: 1px solid var(--line); overflow: visible; }
+    .stage .nav { width: 36px; height: 36px; }
+    .close { position: fixed; top: 12px; right: 12px; z-index: 3; background: rgba(0,0,0,.55); color: #fff; }
+    .stage .prev { left: 6px; } .stage .next { right: 6px; }
   }
+  @media (max-width: 600px) {
+    .bar { position: static; }
+    .count { margin-left: 0; width: 100%; }
+    .grid.portrait { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
 <body>
-<nav><div class="wrap"><a class="logo" href="https://hjorven.github.io/">HJORVEN<small>WALLPAPERS</small></a>
-  <span class="navlinks"><a href="https://hjorven.github.io/">Portfolio</a><a class="gh" href="https://github.com/hjorven/wallpapers">Source</a></span></div></nav>
+<div class="top"><div class="wrap">
+  <a class="brand" href="./">Wallpapers <span>by hjorven</span></a>
+  <nav><a href="https://hjorven.github.io/">Portfolio</a><a href="https://github.com/hjorven/wallpapers">GitHub</a></nav>
+</div></div>
 
-<header class="wrap">
-  <h1>Wall&shy;papers <em>collection</em></h1>
-  <p class="lead">1-bit engravings, sorted by theme. Every wallpaper lists the device it was made for and its exact resolution. Free to download and use; new themes get added over time.</p>
-  <ul class="stats" id="stats" aria-live="polite"></ul>
-  <p class="eyebrow">Themes</p>
+<header class="wrap intro">
+  <h1>Wallpapers</h1>
+  <p id="lead">Free wallpapers, sorted by theme. Pick one to see its details and download it.</p>
+  <h2 class="label">Themes</h2>
   <div class="themes" id="themes"></div>
 </header>
 
-<div class="filters" id="filters" hidden>
-  <div class="wrap">
-    <fieldset id="f-theme"><legend>Theme</legend></fieldset>
-    <fieldset id="f-device"><legend>Device</legend></fieldset>
-    <fieldset id="f-colour"><legend>Colour</legend></fieldset>
-    <fieldset id="f-orient"><legend>Show</legend></fieldset>
-    <button class="reset" id="reset" type="button" hidden>Reset filters</button>
-    <span class="count" id="count" aria-live="polite"></span>
-  </div>
-</div>
+<div class="bar" id="bar" hidden><div class="wrap">
+  <div class="group" id="g-theme"><span>Theme</span><div class="seg" data-key="theme"></div></div>
+  <div class="group" id="g-device"><span>Device</span><div class="seg" data-key="device"></div></div>
+  <div class="group" id="g-colour"><span>Colour</span><div class="dots" data-key="colour"></div></div>
+  <div class="group" id="g-o"><span>Format</span><div class="seg" data-key="o"></div></div>
+  <button class="linkbtn" id="reset" type="button" hidden>Reset</button>
+  <span class="count" id="count" aria-live="polite"></span>
+</div></div>
 
-<main class="wrap" id="main">
-  <noscript><p class="empty">This overview needs JavaScript. All images are also in the <a href="https://github.com/hjorven/wallpapers/tree/main/themes">repository</a>.</p></noscript>
-  <p class="empty" id="empty" hidden>No wallpaper matches these filters. <button class="reset" type="button" data-reset>Reset filters</button></p>
+<main class="wrap">
+  <noscript><p class="empty">This page needs JavaScript. All images are also in the <a href="https://github.com/hjorven/wallpapers/tree/main/themes">repository</a>.</p></noscript>
+  <p class="empty" id="empty" hidden>No wallpaper matches these filters. <button class="linkbtn" type="button" data-reset>Reset filters</button></p>
   <div id="sections"></div>
-  <section class="add">
-    <h2>Adding to the collection</h2>
-    <p>Everything on this page comes from <code>wallpapers.json</code>. A new theme, device or wallpaper is one entry there plus its images; <code>python3 tools/build.py</code> checks the file, makes the previews and packs the ZIPs. Details are in the <a href="https://github.com/hjorven/wallpapers#adding-wallpapers">README</a>.</p>
-  </section>
+  <p class="add"><b>Adding wallpapers.</b> Everything here comes from <code>wallpapers.json</code>. A new theme, device or wallpaper is one entry there plus its images; <code>python3 tools/build.py</code> checks it and makes previews and ZIPs. See the <a href="https://github.com/hjorven/wallpapers#adding-wallpapers">README</a>.</p>
 </main>
 
-<footer><div class="wrap"><span>Hjorven &middot; MMXXVI</span><span><a href="https://hjorven.github.io/">Portfolio</a> &nbsp;&middot;&nbsp; <a href="https://github.com/hjorven/wallpapers">GitHub</a> &nbsp;&middot;&nbsp; <a href="#">Back to top</a></span></div></footer>
+<footer><div class="wrap"><span>hjorven</span><span><a href="https://hjorven.github.io/">Portfolio</a> · <a href="https://github.com/hjorven/wallpapers">GitHub</a></span></div></footer>
+
+<dialog id="detail" aria-labelledby="d-title">
+  <div class="detail">
+    <div class="stage" id="d-stage">
+      <div class="pic"><img id="d-img" alt=""></div>
+      <div class="seg" id="d-orient" aria-label="Preview format"></div>
+      <button class="nav prev" id="d-prev" type="button" aria-label="Previous wallpaper">&#8249;</button>
+      <button class="nav next" id="d-next" type="button" aria-label="Next wallpaper">&#8250;</button>
+    </div>
+    <div class="info">
+      <header>
+        <div><div class="eyebrow" id="d-eyebrow"></div><h3 id="d-title"></h3></div>
+        <button class="close" id="d-close" type="button" aria-label="Close">&times;</button>
+      </header>
+      <div class="colour" id="d-colour"></div>
+      <div class="tags" id="d-tags"></div>
+      <dl id="d-meta"></dl>
+      <div>
+        <div class="eyebrow" style="margin-bottom:8px">Download</div>
+        <div class="files" id="d-files"></div>
+      </div>
+      <details class="howto" id="d-howto"></details>
+    </div>
+  </div>
+</dialog>
 
 <script>
 (() => {
   const $ = (s, el = document) => el.querySelector(s);
-  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const ORIENT = { landscape: 'Landscape', portrait: 'Portrait', square: 'Square' };
-  const state = { theme: 'all', device: 'all', colour: 'all', o: 'landscape' };
-  let D;
+  const DEFAULTS = { theme: 'all', device: 'all', colour: 'all', o: 'landscape', w: '' };
+  const state = { ...DEFAULTS };
+  let D, byId = {}, devices = {}, themes = {}, shown = [], view = { id: '', o: '' };
+
+  const size = n => n == null ? '' : n >= 1e6 ? (n / 1e6).toFixed(1) + ' MB' : Math.round(n / 1e3) + ' KB';
+  const ratio = (w, h) => { const g = (a, b) => b ? g(b, a % b) : a; const k = g(w, h); return `${w / k}:${h / k}`; };
 
   function readHash() {
     const p = new URLSearchParams(location.hash.slice(1));
-    for (const k of Object.keys(state)) if (p.get(k)) state[k] = p.get(k);
+    for (const k of Object.keys(state)) state[k] = p.get(k) || DEFAULTS[k];
   }
   function writeHash() {
     const p = new URLSearchParams();
-    for (const [k, v] of Object.entries(state)) if (!(v === 'all' || (k === 'o' && v === 'landscape'))) p.set(k, v);
+    for (const [k, v] of Object.entries(state)) if (v !== DEFAULTS[k]) p.set(k, v);
     const h = p.toString();
     history.replaceState(null, '', h ? '#' + h : location.pathname + location.search);
   }
+  const imgFor = (w, o) => w.images.find(i => i.orientation === o) || w.images[0];
 
-  function chips(id, key, items, render) {
-    const fs = $('#' + id);
-    // a filter with fewer than two real choices only adds noise
-    fs.hidden = items.length < 2;
-    fs.querySelectorAll('button').forEach(b => b.remove());
-    for (const it of items) {
-      const b = document.createElement('button');
-      b.type = 'button';
-      b.dataset.key = key; b.dataset.val = it.id;
-      render(b, it);
-      fs.appendChild(b);
-    }
-  }
-
-  function imgFor(w) {
-    return w.images.find(i => i.orientation === state.o) || w.images[0];
-  }
-
-  function card(w) {
-    const t = imgFor(w);
-    const dl = w.images.map(i => `<a href="${esc(i.src)}" download>${ORIENT[i.orientation] || esc(i.orientation)}<small>${i.width} &times; ${i.height}</small></a>`).join('');
-    return `<figure style="--c:${esc(w.colour)}">
-      <a href="${esc(t.src)}"><img src="${esc(t.thumb)}" alt="${esc(w.title)}: ${esc((w.motifs || []).join(' and '))}" width="${t.orientation === 'portrait' ? 360 : 480}" height="${t.orientation === 'portrait' ? 480 : 360}" loading="lazy"></a>
-      <figcaption><b><i></i>${w.number ? esc(w.number) + ' &middot; ' : ''}${esc(w.title)}</b><span>${esc((w.motifs || []).join(' · '))}</span>
-        <span class="dl">${dl}</span></figcaption>
-    </figure>`;
+  function tile(w) {
+    const t = imgFor(w, state.o);
+    const portrait = t.height > t.width;
+    return `<button class="tile" type="button" data-id="${esc(w.id)}" style="--c:${esc(w.colour)}">
+      <span class="img"><img src="${esc(t.thumb)}" alt="${esc(w.title)}" width="${portrait ? 360 : 480}" height="${portrait ? 480 : 360}" loading="lazy"></span>
+      <span class="cap"><i></i>${esc(w.title)}<span>${t.width} × ${t.height}</span></span>
+      <span class="sub">${esc((w.motifs || []).join(', '))}</span>
+    </button>`;
   }
 
   function render() {
-    const devices = Object.fromEntries(D.devices.map(d => [d.id, d]));
     const match = w => (state.theme === 'all' || w.theme === state.theme)
       && (state.device === 'all' || w.device === state.device)
       && (state.colour === 'all' || w.colourFamily === state.colour);
-    const shown = D.wallpapers.filter(match);
-
+    shown = D.wallpapers.filter(match);
     let html = '';
     for (const t of D.themes) {
-      const inTheme = shown.filter(w => w.theme === t.id);
-      if (!inTheme.length) continue;
-      const devs = [...new Set(inTheme.map(w => w.device))];
-      const packs = devs.map(dev => {
-        const ws = inTheme.filter(w => w.device === dev);
-        const d = devices[dev] || { name: dev };
+      const inT = shown.filter(w => w.theme === t.id);
+      if (!inT.length) continue;
+      const total = D.wallpapers.filter(w => w.theme === t.id).length;
+      const packs = [...new Set(inT.map(w => w.device))].map(dev => {
+        const ws = inT.filter(w => w.device === dev), d = devices[dev] || { name: dev };
         const pack = (t.packs || []).find(p => p.device === dev) || {};
-        const sizes = [...new Set(D.wallpapers.filter(w => w.theme === t.id && w.device === dev).flatMap(w => w.images.map(i => `${i.width} × ${i.height}`)))].join(' and ');
         const acts = [
           ...(pack.overviews || []).map(o => `<a class="btn" href="${esc(o.src)}">${esc(o.label)}</a>`),
-          pack.zip ? `<a class="btn solid" href="${esc(pack.zip)}" download>All of ${esc(d.name)} as ZIP</a>` : ''
+          pack.zip ? `<a class="btn primary" href="${esc(pack.zip)}" download>Download all (ZIP)</a>` : ''
         ].join('');
-        const howto = pack.howto ? `<details class="howto"><summary>How to set it on the ${esc(d.name)}</summary><ol>${pack.howto.map(s => `<li>${esc(s)}</li>`).join('')}</ol></details>` : '';
-        return `<div class="pack">
-          <header style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px 24px;margin-bottom:16px">
-            <h3 style="margin:0"><b>${esc(d.name)}</b>${d.detail ? ' · ' + esc(d.detail) : ''}${d.use ? ' · ' + esc(d.use) : ''} · ${esc(sizes)}</h3>
-            <span class="acts">${acts}</span>
-          </header>
-          <div class="grid ${state.o}">${ws.map(card).join('')}</div>${howto}
-        </div>`;
+        return `<div class="pack"><div class="pack-head"><span class="dev"><b>${esc(d.name)}</b>${d.detail ? ' · ' + esc(d.detail) : ''}${d.use ? ' · ' + esc(d.use) : ''}</span><span class="acts">${acts}</span></div>
+          <div class="grid ${esc(state.o)}">${ws.map(tile).join('')}</div></div>`;
       }).join('');
       html += `<section class="theme" id="theme-${esc(t.id)}">
-        <header><div><h2>${esc(t.name)} <em>${esc(t.tagline || '')}</em></h2><p class="meta">${esc(t.description || '')}</p></div>
-        <p class="meta">${inTheme.length} of ${D.wallpapers.filter(w => w.theme === t.id).length} wallpapers</p></header>
-        ${packs}
-      </section>`;
+        <div class="theme-head"><h2>${esc(t.name)}</h2><p>${inT.length === total ? total : inT.length + ' of ' + total} wallpapers</p></div>
+        <p class="desc">${esc(t.description || t.tagline || '')}</p>${packs}</section>`;
     }
     $('#sections').innerHTML = html;
     $('#empty').hidden = shown.length > 0;
-    const imgs = shown.reduce((n, w) => n + w.images.length, 0);
-    $('#count').textContent = `${shown.length} wallpaper${shown.length === 1 ? '' : 's'} · ${imgs} images`;
-    const dirty = state.theme !== 'all' || state.device !== 'all' || state.colour !== 'all';
-    $('#reset').hidden = !dirty;
-    document.querySelectorAll('#filters button[data-key]').forEach(b => b.setAttribute('aria-pressed', String(state[b.dataset.key] === b.dataset.val)));
-    document.querySelectorAll('.tcard').forEach(a => a.setAttribute('aria-current', String(state.theme === a.dataset.theme)));
+    $('#count').textContent = `${shown.length} wallpaper${shown.length === 1 ? '' : 's'}`;
+    $('#reset').hidden = state.theme === 'all' && state.device === 'all' && state.colour === 'all';
+    document.querySelectorAll('#bar [data-key] button').forEach(b => b.setAttribute('aria-pressed', String(state[b.parentElement.dataset.key] === b.dataset.val)));
+    document.querySelectorAll('.tcard').forEach(b => b.setAttribute('aria-pressed', String(state.theme === b.dataset.theme)));
     writeHash();
   }
 
+  /* detail view */
+  const dlg = $('#detail');
+  function openDetail(id, o) {
+    const w = byId[id]; if (!w) return;
+    view.id = id; view.o = (o && w.images.some(i => i.orientation === o)) ? o : imgFor(w, state.o).orientation;
+    const img = imgFor(w, view.o), d = devices[w.device] || { name: w.device }, t = themes[w.theme] || { name: w.theme };
+    const pack = (t.packs || []).find(p => p.device === w.device) || {};
+    $('#d-stage').style.setProperty('--stage', `color-mix(in srgb, ${w.colour} 20%, #0d0d0d)`);
+    const el = $('#d-img');
+    el.src = img.thumb; el.alt = `${w.title}, ${ORIENT[img.orientation] || img.orientation}`;
+    el.width = img.width; el.height = img.height;
+    const full = new Image(); full.onload = () => { if (view.id === id && view.o === img.orientation) el.src = img.src; }; full.src = img.src;
+    $('#d-orient').innerHTML = w.images.length > 1 ? w.images.map(i => `<button type="button" data-o="${esc(i.orientation)}" aria-pressed="${i.orientation === view.o}">${ORIENT[i.orientation] || esc(i.orientation)}</button>`).join('') : '';
+    $('#d-orient').hidden = w.images.length < 2;
+    $('#d-eyebrow').textContent = `${t.name}${w.number ? ' · No. ' + w.number : ''}`;
+    $('#d-title').textContent = w.title;
+    const fam = (D.colours.find(c => c.id === w.colourFamily) || {}).name || '';
+    $('#d-colour').innerHTML = `<i style="--c:${esc(w.colour)}"></i><div><b>${esc(fam)}</b><button type="button" data-copy="${esc(w.colour.toUpperCase())}" title="Copy colour code">${esc(w.colour.toUpperCase())}</button></div>`;
+    $('#d-tags').innerHTML = (w.motifs || []).map(m => `<span>${esc(m)}</span>`).join('');
+    const rows = [
+      ['Theme', esc(t.name)],
+      ['Device', esc(d.name + (d.detail ? ' (' + d.detail + ')' : ''))],
+      ['Made for', esc(d.use)],
+      ['Formats', w.images.map(i => `${ORIENT[i.orientation] || esc(i.orientation)} ${i.width} × ${i.height}`).join('<br>')],
+      ['Aspect', esc([...new Set(w.images.map(i => ratio(i.width, i.height)))].join(', '))],
+      ['File type', esc([...new Set(w.images.map(i => i.src.split('.').pop().toUpperCase()))].join(', '))]
+    ].filter(r => r[1]);
+    $('#d-meta').innerHTML = rows.map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join('');
+    $('#d-files').innerHTML = w.images.map(i => {
+      const h = Math.round(22 * i.height / i.width);
+      return `<a class="file" href="${esc(i.src)}" download>
+        <span class="shape" style="height:${h}px"></span>
+        <span><b>${ORIENT[i.orientation] || esc(i.orientation)}</b><small>${i.width} × ${i.height}${i.bytes ? ' · ' + size(i.bytes) : ''}</small></span>
+        <span class="go">Download</span></a>`;
+    }).join('') + (pack.zip ? `<a class="file" href="${esc(pack.zip)}" download><span class="shape" style="height:16px;border-style:dashed"></span><span><b>Whole theme</b><small>All ${esc(t.name)} wallpapers for ${esc(d.name)}, ZIP</small></span><span class="go">Download</span></a>` : '');
+    const how = $('#d-howto');
+    how.hidden = !pack.howto;
+    how.innerHTML = pack.howto ? `<summary>How to set it on the ${esc(d.name)}</summary><ol>${pack.howto.map(s => `<li>${esc(s)}</li>`).join('')}</ol>` : '';
+    const list = shown.length ? shown : D.wallpapers;
+    $('#d-prev').hidden = $('#d-next').hidden = list.length < 2 || !list.some(x => x.id === id);
+    state.w = id; writeHash();
+    if (!dlg.open) dlg.showModal();
+  }
+  function step(n) {
+    const list = shown.length ? shown : D.wallpapers, i = list.findIndex(x => x.id === view.id);
+    if (i >= 0) openDetail(list[(i + n + list.length) % list.length].id, view.o);
+  }
+  dlg.addEventListener('close', () => { state.w = ''; writeHash(); });
+  dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+  $('#d-close').addEventListener('click', () => dlg.close());
+  $('#d-prev').addEventListener('click', () => step(-1));
+  $('#d-next').addEventListener('click', () => step(1));
+  dlg.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') step(-1); if (e.key === 'ArrowRight') step(1); });
+  $('#d-orient').addEventListener('click', e => { const b = e.target.closest('button[data-o]'); if (b) openDetail(view.id, b.dataset.o); });
+  $('#d-colour').addEventListener('click', e => {
+    const b = e.target.closest('[data-copy]'); if (!b || !navigator.clipboard) return;
+    navigator.clipboard.writeText(b.dataset.copy).then(() => {
+      const t = document.createElement('div'); t.className = 'toast'; t.textContent = `Copied ${b.dataset.copy}`;
+      dlg.appendChild(t); setTimeout(() => t.remove(), 1400);
+    }, () => {});
+  });
+
   function build() {
-    const used = k => new Set(D.wallpapers.map(w => w[k]));
-    const usedColours = used('colourFamily'), usedDevices = used('device');
-
-    // stats
+    byId = Object.fromEntries(D.wallpapers.map(w => [w.id, w]));
+    devices = Object.fromEntries(D.devices.map(d => [d.id, d]));
+    themes = Object.fromEntries(D.themes.map(t => [t.id, t]));
+    const usedDev = new Set(D.wallpapers.map(w => w.device)), usedCol = new Set(D.wallpapers.map(w => w.colourFamily));
     const imgs = D.wallpapers.reduce((n, w) => n + w.images.length, 0);
-    $('#stats').innerHTML = [[D.themes.length, D.themes.length === 1 ? 'theme' : 'themes'], [D.wallpapers.length, 'wallpapers'], [imgs, 'images'], [usedDevices.size, usedDevices.size === 1 ? 'device' : 'devices']]
-      .map(([n, l]) => `<li><b>${n}</b>${l}</li>`).join('');
+    $('#lead').textContent = `${D.wallpapers.length} wallpapers in ${D.themes.length} theme${D.themes.length === 1 ? '' : 's'}, ${imgs} images in all. Pick one to see its details and download it.`;
 
-    // theme cards
     $('#themes').innerHTML = D.themes.map(t => {
       const ws = D.wallpapers.filter(w => w.theme === t.id);
-      const pics = ws.slice(0, 4).map(w => { const i = w.images.find(x => x.orientation === 'portrait') || w.images[0]; return `<img src="${esc(i.thumb)}" alt="" loading="lazy">`; }).join('');
-      const devs = [...new Set(ws.map(w => (D.devices.find(d => d.id === w.device) || {}).name || w.device))].join(', ');
-      return `<a class="tcard" href="#theme=${esc(t.id)}" data-theme="${esc(t.id)}">
-        <div class="mosaic">${pics}</div>
-        <div class="t"><b>${esc(t.name)}</b><span>${esc(t.tagline || '')}</span><span>${ws.length} wallpapers · ${esc(devs)}</span>
-        <span class="dots">${ws.map(w => `<i style="background:${esc(w.colour)}"></i>`).join('')}</span></div></a>`;
+      const pics = ws.slice(0, 3).map(w => `<img src="${esc((w.images.find(i => i.orientation === 'portrait') || w.images[0]).thumb)}" alt="" loading="lazy">`).join('');
+      const devs = [...new Set(ws.map(w => (devices[w.device] || {}).name || w.device))].join(', ');
+      return `<button class="tcard" type="button" data-theme="${esc(t.id)}"><span class="stack">${pics}</span>
+        <span><b>${esc(t.name)}</b><small>${esc(t.tagline || '')}</small><small>${ws.length} wallpapers · ${esc(devs)}</small></span></button>`;
     }).join('');
 
-    chips('f-theme', 'theme', [{ id: 'all', name: 'All' }, ...D.themes], (b, t) => { b.className = 'chip'; b.textContent = t.name; });
-    if (D.themes.length < 2) $('#f-theme').hidden = true;
-    const devs = D.devices.filter(d => usedDevices.has(d.id));
-    chips('f-device', 'device', [{ id: 'all', name: 'All' }, ...devs], (b, d) => { b.className = 'chip'; b.textContent = d.name; });
-    if (devs.length < 2) $('#f-device').hidden = true;
-    const cols = D.colours.filter(c => usedColours.has(c.id));
-    chips('f-colour', 'colour', [{ id: 'all', name: 'All colours' }, ...cols], (b, c) => {
-      if (c.id === 'all') { b.className = 'chip'; b.textContent = 'All'; return; }
-      b.className = 'sw'; b.style.setProperty('--c', c.hex); b.title = c.name;
-      b.innerHTML = `<i></i><span class="sr">${esc(c.name)}</span>`;
-    });
-    const orients = [...new Set(D.wallpapers.flatMap(w => w.images.map(i => i.orientation)))].map(o => ({ id: o, name: ORIENT[o] || o }));
-    chips('f-orient', 'o', orients, (b, o) => { b.className = 'chip'; b.textContent = o.name; });
+    const seg = (key, items, min) => {
+      const box = $(`#bar [data-key="${key}"]`);
+      box.innerHTML = items.map(it => `<button type="button" data-val="${esc(it.id)}">${esc(it.name)}</button>`).join('');
+      // a filter with fewer than two real choices only adds noise
+      box.parentElement.hidden = items.length < min;
+    };
+    seg('theme', [{ id: 'all', name: 'All' }, ...D.themes], 3);
+    seg('device', [{ id: 'all', name: 'All' }, ...D.devices.filter(d => usedDev.has(d.id))], 3);
+    seg('o', [...new Set(D.wallpapers.flatMap(w => w.images.map(i => i.orientation)))].map(o => ({ id: o, name: ORIENT[o] || o })), 2);
+    const cols = D.colours.filter(c => usedCol.has(c.id));
+    $('#bar [data-key="colour"]').innerHTML = `<button class="dot all" type="button" data-val="all" title="All colours"><i></i><span class="sr">All colours</span></button>` +
+      cols.map(c => `<button class="dot" type="button" data-val="${esc(c.id)}" title="${esc(c.name)}" style="--c:${esc(c.hex)}"><i></i><span class="sr">${esc(c.name)}</span></button>`).join('');
+    $('#g-colour').hidden = cols.length < 2;
 
-    $('#filters').hidden = false;
-    $('#filters').addEventListener('click', e => {
-      const b = e.target.closest('button[data-key]');
-      if (b) { state[b.dataset.key] = b.dataset.val; render(); }
+    $('#bar').hidden = false;
+    $('#bar').addEventListener('click', e => {
+      const b = e.target.closest('[data-key] button'); if (b) { state[b.parentElement.dataset.key] = b.dataset.val; render(); }
     });
     const reset = () => { state.theme = state.device = state.colour = 'all'; render(); };
     $('#reset').addEventListener('click', reset);
     $('[data-reset]').addEventListener('click', reset);
     $('#themes').addEventListener('click', e => {
-      const a = e.target.closest('.tcard'); if (!a) return;
-      e.preventDefault();
-      state.theme = state.theme === a.dataset.theme ? 'all' : a.dataset.theme;
-      render();
-      $('#filters').scrollIntoView({ block: 'start' });
+      const b = e.target.closest('.tcard'); if (!b) return;
+      state.theme = state.theme === b.dataset.theme ? 'all' : b.dataset.theme; render();
+      const sec = document.getElementById('theme-' + b.dataset.theme); if (sec && state.theme !== 'all') sec.scrollIntoView({ block: 'start' });
     });
-    addEventListener('hashchange', () => { readHash(); render(); });
+    $('#sections').addEventListener('click', e => { const t = e.target.closest('.tile'); if (t) openDetail(t.dataset.id); });
+    addEventListener('hashchange', () => { readHash(); render(); if (state.w) openDetail(state.w); else if (dlg.open) dlg.close(); });
     render();
+    if (state.w) openDetail(state.w);
   }
 
   readHash();

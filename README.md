@@ -77,6 +77,3 @@ python3 -m http.server 8000
 
 Then open http://localhost:8000. Opening `index.html` straight from the disk does not work, because the page loads `wallpapers.json`.
 
-## Fonts
-
-Instrument Serif and IBM Plex Mono are under the SIL Open Font License, bundled from Fontsource.
