@@ -8,9 +8,37 @@ The page shows every theme as a card, then all wallpapers grouped by theme and d
 
 ## Themes
 
-| Theme | Device | Resolution | Wallpapers |
-| --- | --- | --- | --- |
-| Officina: planets over ancient buildings | iPad (9th generation), Safari start page | 2160 × 1620 and 1620 × 2160 | 12 colours, 24 images |
+All themes are made for the iPad (9th generation) Safari start page, 2160 × 1620 landscape and 1620 × 2160 portrait.
+
+| Theme | What it is | Wallpapers |
+| --- | --- | --- |
+| Officina | 1-bit engravings: planets over ancient buildings | 12 |
+| Shan Shui | Ink mountains fading into mist | 10 |
+| Suminagashi | Japanese floating-ink marbling | 10 |
+| Terrazzo | Stone chips in polished binder | 10 |
+| Seigaiha | Japanese wave pattern of overlapping arcs | 10 |
+| Azulejo | Painted Portuguese tiles | 10 |
+| Art Deco | Fans, sunbursts and stepped towers in metal lines | 10 |
+| Memphis | 1980s Milan squiggles and confetti | 10 |
+| Topographic | Contour lines of invented terrain | 10 |
+| Tessellae | Roman floor mosaics in stone cubes | 10 |
+| Neon Noir | A rainy city at night in neon | 10 |
+
+Every theme has landscape and portrait versions of each wallpaper and a ZIP with all of them.
+
+## Generated themes
+
+Everything except Officina is drawn by code in `tools/gen/`, one file per theme, with numpy and pillow only. Each file lists its ten variants (name, colours, motifs) at the top and has one `render()` function. The images are reproducible: the random seed comes from the theme, the variant and the format.
+
+```bash
+pip install numpy pillow
+python3 tools/gen/run.py --sheet terrazzo   # quick contact sheet to look at: tools/gen/sheet-terrazzo.jpg
+python3 tools/gen/run.py terrazzo           # render in full size and update wallpapers.json
+python3 tools/gen/run.py all                # every generated theme
+python3 tools/build.py                      # previews, ZIPs, file sizes
+```
+
+A new generated theme is a new file in `tools/gen/` with `ID`, `NAME`, `TAGLINE`, `DESCRIPTION`, `FORMAT`, `VARIANTS`, `render()` and `colour()`, plus its name in the `STYLES` list in `run.py`.
 
 ## Layout
 
