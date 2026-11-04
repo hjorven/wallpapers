@@ -1,0 +1,437 @@
+{
+  "$comment": "Every wallpaper on the site comes from this file. Add a theme, a device or a wallpaper here, then run: python3 tools/build.py",
+  "colours": [
+    {
+      "id": "blue",
+      "name": "Blue",
+      "hex": "#2424ff"
+    },
+    {
+      "id": "violet",
+      "name": "Violet",
+      "hex": "#8a2cf0"
+    },
+    {
+      "id": "pink",
+      "name": "Pink",
+      "hex": "#ff2e93"
+    },
+    {
+      "id": "red",
+      "name": "Red",
+      "hex": "#e0261f"
+    },
+    {
+      "id": "orange",
+      "name": "Orange",
+      "hex": "#ff7a00"
+    },
+    {
+      "id": "yellow",
+      "name": "Yellow",
+      "hex": "#f2b200"
+    },
+    {
+      "id": "green",
+      "name": "Green",
+      "hex": "#4cbf1a"
+    },
+    {
+      "id": "cyan",
+      "name": "Cyan",
+      "hex": "#00a8c8"
+    },
+    {
+      "id": "mono",
+      "name": "Mono",
+      "hex": "#e9e9f5"
+    }
+  ],
+  "devices": [
+    {
+      "id": "ipad-9",
+      "name": "iPad",
+      "detail": "9th generation",
+      "use": "Safari start page"
+    }
+  ],
+  "themes": [
+    {
+      "id": "officina",
+      "name": "Officina",
+      "tagline": "Planets over ancient buildings",
+      "description": "Twelve 1-bit engravings in the style of the portfolio, one per accent colour. Each one pairs its own planet with a building from antiquity, floating solids and a cloud bank.",
+      "packs": [
+        {
+          "device": "ipad-9",
+          "zip": "downloads/officina-ipad.zip",
+          "overviews": [
+            {
+              "label": "Overview landscape",
+              "src": "themes/officina/ipad/overview-landscape.png"
+            },
+            {
+              "label": "Overview portrait",
+              "src": "themes/officina/ipad/overview-portrait.png"
+            }
+          ],
+          "howto": [
+            "Tap Landscape or Portrait, then hold the image and choose Save to Photos.",
+            "In Safari, open a new tab, tap Edit at the bottom of the start page and turn on Background Image.",
+            "Tap + and pick the wallpaper."
+          ]
+        }
+      ]
+    }
+  ],
+  "wallpapers": [
+    {
+      "id": "officina-cobalt",
+      "theme": "officina",
+      "device": "ipad-9",
+      "number": "01",
+      "title": "Cobalt",
+      "colour": "#2424ff",
+      "colourFamily": "blue",
+      "motifs": [
+        "Ringed planet",
+        "Temple"
+      ],
+      "images": [
+        {
+          "orientation": "landscape",
+          "width": 2160,
+          "height": 1620,
+          "src": "themes/officina/ipad/full/01-cobalt-quer.png",
+          "thumb": "themes/officina/ipad/thumbs/01-cobalt-quer.jpg"
+        },
+        {
+          "orientation": "portrait",
+          "width": 1620,
+          "height": 2160,
+          "src": "themes/officina/ipad/full/01-cobalt-hoch.png",
+          "thumb": "themes/officina/ipad/thumbs/01-cobalt-hoch.jpg"
+        }
+      ]
+    },
+    {
+      "id": "officina-violet",
+      "theme": "officina",
+      "device": "ipad-9",
+      "number": "02",
+      "title": "Violet",
+      "colour": "#7a2cff",
+      "colourFamily": "violet",
+      "motifs": [
+        "Three moons",
+        "Obelisk"
+      ],
+      "images": [
+        {
+          "orientation": "landscape",
+          "width": 2160,
+          "height": 1620,
+          "src": "themes/officina/ipad/full/02-violet-quer.png",
+          "thumb": "themes/officina/ipad/thumbs/02-violet-quer.jpg"
+        },
+        {
+          "orientation": "portrait",
+          "width": 1620,
+          "height": 2160,
+          "src": "themes/officina/ipad/full/02-violet-hoch.png",
+          "thumb": "themes/officina/ipad/thumbs/02-violet-hoch.jpg"
+        }
+      ]
+    },
+    {
+      "id": "officina-purple",
+      "theme": "officina",
+      "device": "ipad-9",
+      "number": "03",
+      "title": "Purple",
+      "colour": "#b02be3",
+      "colourFamily": "violet",
+      "motifs": [
+        "Crescent moon",
+        "Step pyramid"
+      ],
+      "images": [
+        {
+          "orientation": "landscape",
+          "width": 2160,
+          "height": 1620,
+          "src": "themes/officina/ipad/full/03-purple-quer.png",
+          "thumb": "themes/officina/ipad/thumbs/03-purple-quer.jpg"
+        },
+        {
+          "orientation": "portrait",
+          "width": 1620,
+          "height": 2160,
+          "src": "themes/officina/ipad/full/03-purple-hoch.png",
+          "thumb": "themes/officina/ipad/thumbs/03-purple-hoch.jpg"
+        }
+      ]
+    },
+    {
+      "id": "officina-magenta",
+      "theme": "officina",
+      "device": "ipad-9",
+      "number": "04",
+      "title": "Magenta",
+      "colour": "#ff2e93",
+      "colourFamily": "pink",
+      "motifs": [
+        "Tilted rings",
+        "Triumphal arch"
+      ],
+      "images": [
+        {
+          "orientation": "landscape",
+          "width": 2160,
+          "height": 1620,
+          "src": "themes/officina/ipad/full/04-magenta-quer.png",
+          "thumb": "themes/officina/ipad/thumbs/04-magenta-quer.jpg"
+        },
+        {
+          "orientation": "portrait",
+          "width": 1620,
+          "height": 2160,
+          "src": "themes/officina/ipad/full/04-magenta-hoch.png",
+          "thumb": "themes/officina/ipad/thumbs/04-magenta-hoch.jpg"
+        }
+      ]
+    },
+    {
+      "id": "officina-crimson",
+      "theme": "officina",
+      "device": "ipad-9",
+      "number": "05",
+      "title": "Crimson",
+      "colour": "#d6143c",
+      "colourFamily": "red",
+      "motifs": [
+        "Cratered moon",
+        "Column ruins"
+      ],
+      "images": [
+        {
+          "orientation": "landscape",
+          "width": 2160,
+          "height": 1620,
+          "src": "themes/officina/ipad/full/05-crimson-quer.png",
+          "thumb": "themes/officina/ipad/thumbs/05-crimson-quer.jpg"
+        },
+        {
+          "orientation": "portrait",
+          "width": 1620,
+          "height": 2160,
+          "src": "themes/officina/ipad/full/05-crimson-hoch.png",
+          "thumb": "themes/officina/ipad/thumbs/05-crimson-hoch.jpg"
+        }
+      ]
+    },
+    {
+      "id": "officina-vermilion",
+      "theme": "officina",
+      "device": "ipad-9",
+      "number": "06",
+      "title": "Vermilion",
+      "colour": "#ee3a17",
+      "colourFamily": "red",
+      "motifs": [
+        "Sun",
+        "Lighthouse"
+      ],
+      "images": [
+        {
+          "orientation": "landscape",
+          "width": 2160,
+          "height": 1620,
+          "src": "themes/officina/ipad/full/06-vermilion-quer.png",
+          "thumb": "themes/officina/ipad/thumbs/06-vermilion-quer.jpg"
+        },
+        {
+          "orientation": "portrait",
+          "width": 1620,
+          "height": 2160,
+          "src": "themes/officina/ipad/full/06-vermilion-hoch.png",
+          "thumb": "themes/officina/ipad/thumbs/06-vermilion-hoch.jpg"
+        }
+      ]
+    },
+    {
+      "id": "officina-orange",
+      "theme": "officina",
+      "device": "ipad-9",
+      "number": "07",
+      "title": "Orange",
+      "colour": "#ff7a00",
+      "colourFamily": "orange",
+      "motifs": [
+        "Banded giant",
+        "Pyramids"
+      ],
+      "images": [
+        {
+          "orientation": "landscape",
+          "width": 2160,
+          "height": 1620,
+          "src": "themes/officina/ipad/full/07-orange-quer.png",
+          "thumb": "themes/officina/ipad/thumbs/07-orange-quer.jpg"
+        },
+        {
+          "orientation": "portrait",
+          "width": 1620,
+          "height": 2160,
+          "src": "themes/officina/ipad/full/07-orange-hoch.png",
+          "thumb": "themes/officina/ipad/thumbs/07-orange-hoch.jpg"
+        }
+      ]
+    },
+    {
+      "id": "officina-gold",
+      "theme": "officina",
+      "device": "ipad-9",
+      "number": "08",
+      "title": "Gold",
+      "colour": "#f2b200",
+      "colourFamily": "yellow",
+      "motifs": [
+        "Armillary sphere",
+        "Tholos"
+      ],
+      "images": [
+        {
+          "orientation": "landscape",
+          "width": 2160,
+          "height": 1620,
+          "src": "themes/officina/ipad/full/08-gold-quer.png",
+          "thumb": "themes/officina/ipad/thumbs/08-gold-quer.jpg"
+        },
+        {
+          "orientation": "portrait",
+          "width": 1620,
+          "height": 2160,
+          "src": "themes/officina/ipad/full/08-gold-hoch.png",
+          "thumb": "themes/officina/ipad/thumbs/08-gold-hoch.jpg"
+        }
+      ]
+    },
+    {
+      "id": "officina-lime",
+      "theme": "officina",
+      "device": "ipad-9",
+      "number": "09",
+      "title": "Lime",
+      "colour": "#9bd400",
+      "colourFamily": "green",
+      "motifs": [
+        "Moon with ring",
+        "Colosseum"
+      ],
+      "images": [
+        {
+          "orientation": "landscape",
+          "width": 2160,
+          "height": 1620,
+          "src": "themes/officina/ipad/full/09-lime-quer.png",
+          "thumb": "themes/officina/ipad/thumbs/09-lime-quer.jpg"
+        },
+        {
+          "orientation": "portrait",
+          "width": 1620,
+          "height": 2160,
+          "src": "themes/officina/ipad/full/09-lime-hoch.png",
+          "thumb": "themes/officina/ipad/thumbs/09-lime-hoch.jpg"
+        }
+      ]
+    },
+    {
+      "id": "officina-green",
+      "theme": "officina",
+      "device": "ipad-9",
+      "number": "10",
+      "title": "Green",
+      "colour": "#1fb043",
+      "colourFamily": "green",
+      "motifs": [
+        "Ring world",
+        "Stone circle"
+      ],
+      "images": [
+        {
+          "orientation": "landscape",
+          "width": 2160,
+          "height": 1620,
+          "src": "themes/officina/ipad/full/10-green-quer.png",
+          "thumb": "themes/officina/ipad/thumbs/10-green-quer.jpg"
+        },
+        {
+          "orientation": "portrait",
+          "width": 1620,
+          "height": 2160,
+          "src": "themes/officina/ipad/full/10-green-hoch.png",
+          "thumb": "themes/officina/ipad/thumbs/10-green-hoch.jpg"
+        }
+      ]
+    },
+    {
+      "id": "officina-patina",
+      "theme": "officina",
+      "device": "ipad-9",
+      "number": "11",
+      "title": "Patina",
+      "colour": "#10b08b",
+      "colourFamily": "cyan",
+      "motifs": [
+        "Faceted planet",
+        "Observatory"
+      ],
+      "images": [
+        {
+          "orientation": "landscape",
+          "width": 2160,
+          "height": 1620,
+          "src": "themes/officina/ipad/full/11-patina-quer.png",
+          "thumb": "themes/officina/ipad/thumbs/11-patina-quer.jpg"
+        },
+        {
+          "orientation": "portrait",
+          "width": 1620,
+          "height": 2160,
+          "src": "themes/officina/ipad/full/11-patina-hoch.png",
+          "thumb": "themes/officina/ipad/thumbs/11-patina-hoch.jpg"
+        }
+      ]
+    },
+    {
+      "id": "officina-turquoise",
+      "theme": "officina",
+      "device": "ipad-9",
+      "number": "12",
+      "title": "Turquoise",
+      "colour": "#00a8dc",
+      "colourFamily": "cyan",
+      "motifs": [
+        "Ocean planet",
+        "Ring portal"
+      ],
+      "images": [
+        {
+          "orientation": "landscape",
+          "width": 2160,
+          "height": 1620,
+          "src": "themes/officina/ipad/full/12-turquoise-quer.png",
+          "thumb": "themes/officina/ipad/thumbs/12-turquoise-quer.jpg"
+        },
+        {
+          "orientation": "portrait",
+          "width": 1620,
+          "height": 2160,
+          "src": "themes/officina/ipad/full/12-turquoise-hoch.png",
+          "thumb": "themes/officina/ipad/thumbs/12-turquoise-hoch.jpg"
+        }
+      ]
+    }
+  ]
+}

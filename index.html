@@ -4,22 +4,27 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Wallpapers · Hjorven</title>
-<meta name="description" content="A growing collection of 1-bit engraving wallpapers by Hjorven, free to download.">
+<meta name="description" content="A growing collection of 1-bit engraving wallpapers by Hjorven, sorted by theme, device and colour. Free to download.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#10112c">
+<link rel="preload" href="wallpapers.json" as="fetch" crossorigin>
 <style>
   @font-face { font-family: "Instrument Serif"; src: url("fonts/instrument-serif-latin-400-normal.woff2") format("woff2"); font-display: swap; }
   @font-face { font-family: "Instrument Serif"; font-style: italic; src: url("fonts/instrument-serif-latin-400-italic.woff2") format("woff2"); font-display: swap; }
   @font-face { font-family: "Plex Mono"; src: url("fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2"); font-display: swap; }
-  :root { --ink: #10112c; --line: #2d3070; --paper: #e9e9f5; --muted: #a9abd6; --accent: #2424ff; --accent-text: #8a8aff; }
+  :root { --ink: #10112c; --ink-2: #161838; --line: #2d3070; --paper: #e9e9f5; --muted: #a9abd6; --accent-text: #8a8aff; }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
   body { margin: 0; background: var(--ink); color: var(--paper); font: 15px/1.5 "Plex Mono", ui-monospace, monospace; }
   a { color: inherit; }
+  button { font: inherit; color: inherit; }
   .wrap { max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  :focus-visible { outline: 2px solid var(--accent-text); outline-offset: 2px; }
+
   nav { border-bottom: 1px solid var(--line); }
   nav .wrap { display: flex; justify-content: space-between; align-items: center; height: 64px; }
   nav a { text-decoration: none; }
@@ -27,134 +32,275 @@
   .logo small { display: block; font: 9px/1 "Plex Mono", monospace; letter-spacing: .3em; color: var(--muted); margin-top: 4px; }
   .navlinks { display: flex; gap: 20px; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
   .navlinks a:hover { color: var(--accent-text); }
+
   h1 { font: 400 clamp(48px, 9vw, 96px)/.95 "Instrument Serif", serif; margin: 56px 0 14px; }
   h1 em { color: var(--accent-text); }
   .lead { color: var(--muted); max-width: 62ch; margin: 0; }
-  .index { list-style: none; padding: 0; margin: 36px 0 0; border-top: 1px solid var(--line); }
-  .index li { border-bottom: 1px solid var(--line); }
-  .index a { display: grid; grid-template-columns: 3ch 1fr auto; gap: 16px; align-items: baseline; padding: 14px 0; text-decoration: none; }
-  .index a:hover b { color: var(--accent-text); }
-  .index b { font: 400 26px/1.1 "Instrument Serif", serif; }
-  .index span { color: var(--muted); font-size: 12px; }
-  .set { padding: 72px 0 0; }
-  .set header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px 24px; margin-bottom: 28px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
-  .set h2 { font: 400 clamp(34px, 5vw, 52px)/1 "Instrument Serif", serif; margin: 0 0 8px; }
-  .set h2 em { color: var(--accent-text); }
+  .stats { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 24px 0 0; padding: 0; list-style: none; font-size: 12px; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+  .stats b { color: var(--paper); font: 400 28px/1 "Instrument Serif", serif; margin-right: 6px; letter-spacing: 0; }
+
+  /* theme index */
+  .eyebrow { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); margin: 56px 0 14px; }
+  .themes { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .tcard { display: block; text-decoration: none; border: 1px solid var(--line); background: var(--ink-2); transition: border-color .2s; }
+  .tcard:hover, .tcard[aria-current="true"] { border-color: var(--paper); }
+  .mosaic { display: grid; grid-template-columns: repeat(4, 1fr); aspect-ratio: 4 / 1.5; overflow: hidden; border-bottom: 1px solid var(--line); }
+  .mosaic img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tcard div.t { padding: 14px 16px 16px; }
+  .tcard b { display: block; font: 400 28px/1.05 "Instrument Serif", serif; }
+  .tcard span { display: block; color: var(--muted); font-size: 12px; margin-top: 4px; }
+  .tcard .dots { display: flex; gap: 4px; margin-top: 10px; }
+  .tcard .dots i { width: 10px; height: 10px; display: block; }
+
+  /* filters */
+  .filters { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--ink) 92%, transparent); backdrop-filter: blur(6px); border-bottom: 1px solid var(--line); margin-top: 56px; }
+  .filters .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 22px; padding-top: 12px; padding-bottom: 12px; }
+  fieldset { border: 0; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-width: 0; }
+  fieldset[hidden], .filters[hidden] { display: none; }
+  legend { float: left; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin-right: 6px; padding: 0; }
+  .chip { border: 1px solid var(--line); background: none; padding: 6px 10px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; min-height: 32px; }
+  .chip:hover { border-color: var(--muted); }
+  .chip[aria-pressed="true"] { border-color: var(--paper); background: var(--paper); color: var(--ink); }
+  .sw { width: 32px; height: 32px; border: 1px solid var(--line); padding: 0; cursor: pointer; position: relative; background: none; display: grid; place-items: center; }
+  .sw i { width: 18px; height: 18px; display: block; background: var(--c); }
+  .sw[aria-pressed="true"] { border-color: var(--paper); box-shadow: inset 0 0 0 2px var(--ink); }
+  .count { margin-left: auto; font-size: 12px; color: var(--muted); }
+  .reset { background: none; border: 0; text-decoration: underline; cursor: pointer; font-size: 12px; color: var(--muted); padding: 0; }
+  .reset[hidden] { display: none; }
+
+  /* sections */
+  .theme { padding: 64px 0 0; scroll-margin-top: 80px; }
+  .theme > header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px 24px; margin-bottom: 28px; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
+  .theme h2 { font: 400 clamp(36px, 5vw, 56px)/1 "Instrument Serif", serif; margin: 0 0 8px; }
+  .theme h2 em { color: var(--accent-text); }
   .meta { color: var(--muted); font-size: 12px; margin: 0; max-width: 64ch; }
-  .btn { display: inline-block; border: 1px solid var(--paper); padding: 10px 16px; text-decoration: none; text-transform: uppercase; font-size: 11px; letter-spacing: .14em; white-space: nowrap; }
   .acts { display: flex; flex-wrap: wrap; gap: 8px; }
-  .btn.ghost { border-color: var(--line); }
-  .btn:hover { background: var(--paper); color: var(--ink); }
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 32px 20px; }
+  .btn { display: inline-block; border: 1px solid var(--line); padding: 10px 14px; text-decoration: none; text-transform: uppercase; font-size: 11px; letter-spacing: .12em; white-space: nowrap; }
+  .btn.solid { border-color: var(--paper); }
+  .btn:hover { background: var(--paper); color: var(--ink); border-color: var(--paper); }
+  .pack + .pack { margin-top: 40px; }
+  .pack h3 { font: 400 22px/1.2 "Instrument Serif", serif; margin: 0 0 16px; color: var(--muted); }
+  .pack h3 b { color: var(--paper); font-weight: 400; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 32px 20px; }
+  .grid.portrait { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
   figure { margin: 0; }
-  figure img { width: 100%; height: auto; display: block; border: 1px solid var(--line); transition: border-color .2s; }
+  figure > a { display: block; }
+  figure img { width: 100%; height: auto; display: block; border: 1px solid var(--line); background: var(--ink-2); transition: border-color .2s; }
   figure > a:hover img, figure > a:focus-visible img { border-color: var(--c); }
-  figcaption { display: grid; gap: 2px; margin-top: 10px; font-size: 12px; letter-spacing: .04em; }
+  figcaption { display: grid; gap: 2px; margin-top: 10px; font-size: 12px; letter-spacing: .03em; }
   figcaption b { display: flex; align-items: center; gap: 8px; font-weight: 400; }
-  .sw { width: 10px; height: 10px; background: var(--c); display: inline-block; }
+  figcaption b i { width: 10px; height: 10px; background: var(--c); display: inline-block; flex: none; }
   figcaption > span { color: var(--muted); }
   .dl { display: flex; gap: 8px; margin-top: 8px; }
-  .dl a { flex: 1; text-align: center; border: 1px solid var(--line); color: var(--paper); text-decoration: none; padding: 9px 0; text-transform: uppercase; font-size: 10px; letter-spacing: .14em; }
+  .dl a { flex: 1; text-align: center; border: 1px solid var(--line); text-decoration: none; padding: 9px 0; text-transform: uppercase; font-size: 10px; letter-spacing: .12em; }
+  .dl a small { display: block; font-size: 9px; letter-spacing: .04em; color: var(--muted); text-transform: none; margin-top: 1px; }
   .dl a:hover, .dl a:focus-visible { border-color: var(--c); }
-  .howto { margin: 40px 0 0; padding: 20px 24px; border: 1px dashed var(--line); max-width: 74ch; }
-  .howto h3 { margin: 0 0 8px; font: 400 22px/1.2 "Instrument Serif", serif; }
-  .howto ol { color: var(--muted); padding-left: 20px; margin: 0; }
+  .howto { margin: 36px 0 0; padding: 18px 22px; border: 1px dashed var(--line); max-width: 74ch; }
+  .howto summary { cursor: pointer; font: 400 20px/1.2 "Instrument Serif", serif; }
+  .howto ol { color: var(--muted); padding-left: 20px; margin: 10px 0 0; }
+  .empty { padding: 64px 0; color: var(--muted); }
+  .empty[hidden] { display: none; }
+  .add { margin: 96px 0 0; padding: 24px; border: 1px solid var(--line); max-width: 74ch; }
+  .add h2 { font: 400 28px/1.1 "Instrument Serif", serif; margin: 0 0 8px; }
+  .add p { color: var(--muted); margin: 0; font-size: 13px; }
+  .add code { color: var(--paper); }
+
   footer { margin-top: 96px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; }
   footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-top: 20px; padding-bottom: 40px; }
-  :focus-visible { outline: 2px solid var(--accent-text); outline-offset: 2px; }
-  @media (max-width: 520px) { .navlinks a.gh { display: none; } .index a { grid-template-columns: 3ch 1fr; } .index a span:last-child { grid-column: 2; } }
+  @media (max-width: 600px) {
+    .navlinks a.gh { display: none; }
+    .filters { position: static; }
+    .count { margin-left: 0; width: 100%; }
+  }
 </style>
 </head>
 <body>
 <nav><div class="wrap"><a class="logo" href="https://hjorven.github.io/">HJORVEN<small>WALLPAPERS</small></a>
   <span class="navlinks"><a href="https://hjorven.github.io/">Portfolio</a><a class="gh" href="https://github.com/hjorven/wallpapers">Source</a></span></div></nav>
-<main class="wrap">
-  <h1>Wall&shy;papers <em>collection</em></h1>
-  <p class="lead">1-bit engravings in the Officina style, free to download and use. Every set lists the device it was made for and its exact resolution. New sets get added here over time.</p>
-  <ol class="index">
-    <li><a href="#officina-ipad"><span>01</span><b>Officina &middot; iPad Safari</b><span>12 colours &middot; 24 images</span></a></li>
-  </ol>
 
-  <section class="set" id="officina-ipad">
-    <header>
-      <div>
-        <h2>Officina <em>for iPad</em></h2>
-        <p class="meta">Twelve engravings for the Safari start page, each with its own planet and building, one per accent colour of the portfolio. 2160 &times; 1620 landscape and 1620 &times; 2160 portrait, made for the iPad (9th generation).</p>
-      </div>
-      <span class="acts"><a class="btn ghost" href="sets/officina-ipad/overview-landscape.png">Overview landscape</a><a class="btn ghost" href="sets/officina-ipad/overview-portrait.png">Overview portrait</a><a class="btn" href="sets/officina-ipad/officina-ipad-all.zip" download>All 24 as ZIP &middot; 3 MB</a></span>
-    </header>
-    <div class="grid">
-      <figure style="--c:#2424ff">
-        <a href="sets/officina-ipad/full/01-cobalt-quer.png"><img src="sets/officina-ipad/thumbs/01-cobalt-quer.jpg" alt="Cobalt: Ringed planet and Temple" width="480" height="360" loading="lazy"></a>
-        <figcaption><b><i class="sw"></i>01 &middot; Cobalt</b><span>Ringed planet &middot; Temple</span>
-          <span class="dl"><a href="sets/officina-ipad/full/01-cobalt-quer.png" download>Landscape</a><a href="sets/officina-ipad/full/01-cobalt-hoch.png" download>Portrait</a></span></figcaption>
-      </figure>
-      <figure style="--c:#7a2cff">
-        <a href="sets/officina-ipad/full/02-violet-quer.png"><img src="sets/officina-ipad/thumbs/02-violet-quer.jpg" alt="Violet: Three moons and Obelisk" width="480" height="360" loading="lazy"></a>
-        <figcaption><b><i class="sw"></i>02 &middot; Violet</b><span>Three moons &middot; Obelisk</span>
-          <span class="dl"><a href="sets/officina-ipad/full/02-violet-quer.png" download>Landscape</a><a href="sets/officina-ipad/full/02-violet-hoch.png" download>Portrait</a></span></figcaption>
-      </figure>
-      <figure style="--c:#b02be3">
-        <a href="sets/officina-ipad/full/03-purple-quer.png"><img src="sets/officina-ipad/thumbs/03-purple-quer.jpg" alt="Purple: Crescent moon and Step pyramid" width="480" height="360" loading="lazy"></a>
-        <figcaption><b><i class="sw"></i>03 &middot; Purple</b><span>Crescent moon &middot; Step pyramid</span>
-          <span class="dl"><a href="sets/officina-ipad/full/03-purple-quer.png" download>Landscape</a><a href="sets/officina-ipad/full/03-purple-hoch.png" download>Portrait</a></span></figcaption>
-      </figure>
-      <figure style="--c:#ff2e93">
-        <a href="sets/officina-ipad/full/04-magenta-quer.png"><img src="sets/officina-ipad/thumbs/04-magenta-quer.jpg" alt="Magenta: Tilted rings and Triumphal arch" width="480" height="360" loading="lazy"></a>
-        <figcaption><b><i class="sw"></i>04 &middot; Magenta</b><span>Tilted rings &middot; Triumphal arch</span>
-          <span class="dl"><a href="sets/officina-ipad/full/04-magenta-quer.png" download>Landscape</a><a href="sets/officina-ipad/full/04-magenta-hoch.png" download>Portrait</a></span></figcaption>
-      </figure>
-      <figure style="--c:#d6143c">
-        <a href="sets/officina-ipad/full/05-crimson-quer.png"><img src="sets/officina-ipad/thumbs/05-crimson-quer.jpg" alt="Crimson: Cratered moon and Column ruins" width="480" height="360" loading="lazy"></a>
-        <figcaption><b><i class="sw"></i>05 &middot; Crimson</b><span>Cratered moon &middot; Column ruins</span>
-          <span class="dl"><a href="sets/officina-ipad/full/05-crimson-quer.png" download>Landscape</a><a href="sets/officina-ipad/full/05-crimson-hoch.png" download>Portrait</a></span></figcaption>
-      </figure>
-      <figure style="--c:#ee3a17">
-        <a href="sets/officina-ipad/full/06-vermilion-quer.png"><img src="sets/officina-ipad/thumbs/06-vermilion-quer.jpg" alt="Vermilion: Sun and Lighthouse" width="480" height="360" loading="lazy"></a>
-        <figcaption><b><i class="sw"></i>06 &middot; Vermilion</b><span>Sun &middot; Lighthouse</span>
-          <span class="dl"><a href="sets/officina-ipad/full/06-vermilion-quer.png" download>Landscape</a><a href="sets/officina-ipad/full/06-vermilion-hoch.png" download>Portrait</a></span></figcaption>
-      </figure>
-      <figure style="--c:#ff7a00">
-        <a href="sets/officina-ipad/full/07-orange-quer.png"><img src="sets/officina-ipad/thumbs/07-orange-quer.jpg" alt="Orange: Banded giant and Pyramids" width="480" height="360" loading="lazy"></a>
-        <figcaption><b><i class="sw"></i>07 &middot; Orange</b><span>Banded giant &middot; Pyramids</span>
-          <span class="dl"><a href="sets/officina-ipad/full/07-orange-quer.png" download>Landscape</a><a href="sets/officina-ipad/full/07-orange-hoch.png" download>Portrait</a></span></figcaption>
-      </figure>
-      <figure style="--c:#f2b200">
-        <a href="sets/officina-ipad/full/08-gold-quer.png"><img src="sets/officina-ipad/thumbs/08-gold-quer.jpg" alt="Gold: Armillary sphere and Tholos" width="480" height="360" loading="lazy"></a>
-        <figcaption><b><i class="sw"></i>08 &middot; Gold</b><span>Armillary sphere &middot; Tholos</span>
-          <span class="dl"><a href="sets/officina-ipad/full/08-gold-quer.png" download>Landscape</a><a href="sets/officina-ipad/full/08-gold-hoch.png" download>Portrait</a></span></figcaption>
-      </figure>
-      <figure style="--c:#9bd400">
-        <a href="sets/officina-ipad/full/09-lime-quer.png"><img src="sets/officina-ipad/thumbs/09-lime-quer.jpg" alt="Lime: Moon with ring and Colosseum" width="480" height="360" loading="lazy"></a>
-        <figcaption><b><i class="sw"></i>09 &middot; Lime</b><span>Moon with ring &middot; Colosseum</span>
-          <span class="dl"><a href="sets/officina-ipad/full/09-lime-quer.png" download>Landscape</a><a href="sets/officina-ipad/full/09-lime-hoch.png" download>Portrait</a></span></figcaption>
-      </figure>
-      <figure style="--c:#1fb043">
-        <a href="sets/officina-ipad/full/10-green-quer.png"><img src="sets/officina-ipad/thumbs/10-green-quer.jpg" alt="Green: Ring world and Stone circle" width="480" height="360" loading="lazy"></a>
-        <figcaption><b><i class="sw"></i>10 &middot; Green</b><span>Ring world &middot; Stone circle</span>
-          <span class="dl"><a href="sets/officina-ipad/full/10-green-quer.png" download>Landscape</a><a href="sets/officina-ipad/full/10-green-hoch.png" download>Portrait</a></span></figcaption>
-      </figure>
-      <figure style="--c:#10b08b">
-        <a href="sets/officina-ipad/full/11-patina-quer.png"><img src="sets/officina-ipad/thumbs/11-patina-quer.jpg" alt="Patina: Faceted planet and Observatory" width="480" height="360" loading="lazy"></a>
-        <figcaption><b><i class="sw"></i>11 &middot; Patina</b><span>Faceted planet &middot; Observatory</span>
-          <span class="dl"><a href="sets/officina-ipad/full/11-patina-quer.png" download>Landscape</a><a href="sets/officina-ipad/full/11-patina-hoch.png" download>Portrait</a></span></figcaption>
-      </figure>
-      <figure style="--c:#00a8dc">
-        <a href="sets/officina-ipad/full/12-turquoise-quer.png"><img src="sets/officina-ipad/thumbs/12-turquoise-quer.jpg" alt="Turquoise: Ocean planet and Ring portal" width="480" height="360" loading="lazy"></a>
-        <figcaption><b><i class="sw"></i>12 &middot; Turquoise</b><span>Ocean planet &middot; Ring portal</span>
-          <span class="dl"><a href="sets/officina-ipad/full/12-turquoise-quer.png" download>Landscape</a><a href="sets/officina-ipad/full/12-turquoise-hoch.png" download>Portrait</a></span></figcaption>
-      </figure>
-    </div>
-    <div class="howto">
-      <h3>Set it as the Safari background</h3>
-      <ol>
-        <li>Tap Landscape or Portrait, then hold the image and choose Save to Photos.</li>
-        <li>In Safari, open a new tab, tap Edit at the bottom of the start page and turn on Background Image.</li>
-        <li>Tap + and pick the wallpaper.</li>
-      </ol>
-    </div>
+<header class="wrap">
+  <h1>Wall&shy;papers <em>collection</em></h1>
+  <p class="lead">1-bit engravings, sorted by theme. Every wallpaper lists the device it was made for and its exact resolution. Free to download and use; new themes get added over time.</p>
+  <ul class="stats" id="stats" aria-live="polite"></ul>
+  <p class="eyebrow">Themes</p>
+  <div class="themes" id="themes"></div>
+</header>
+
+<div class="filters" id="filters" hidden>
+  <div class="wrap">
+    <fieldset id="f-theme"><legend>Theme</legend></fieldset>
+    <fieldset id="f-device"><legend>Device</legend></fieldset>
+    <fieldset id="f-colour"><legend>Colour</legend></fieldset>
+    <fieldset id="f-orient"><legend>Show</legend></fieldset>
+    <button class="reset" id="reset" type="button" hidden>Reset filters</button>
+    <span class="count" id="count" aria-live="polite"></span>
+  </div>
+</div>
+
+<main class="wrap" id="main">
+  <noscript><p class="empty">This overview needs JavaScript. All images are also in the <a href="https://github.com/hjorven/wallpapers/tree/main/themes">repository</a>.</p></noscript>
+  <p class="empty" id="empty" hidden>No wallpaper matches these filters. <button class="reset" type="button" data-reset>Reset filters</button></p>
+  <div id="sections"></div>
+  <section class="add">
+    <h2>Adding to the collection</h2>
+    <p>Everything on this page comes from <code>wallpapers.json</code>. A new theme, device or wallpaper is one entry there plus its images; <code>python3 tools/build.py</code> checks the file, makes the previews and packs the ZIPs. Details are in the <a href="https://github.com/hjorven/wallpapers#adding-wallpapers">README</a>.</p>
   </section>
 </main>
+
 <footer><div class="wrap"><span>Hjorven &middot; MMXXVI</span><span><a href="https://hjorven.github.io/">Portfolio</a> &nbsp;&middot;&nbsp; <a href="https://github.com/hjorven/wallpapers">GitHub</a> &nbsp;&middot;&nbsp; <a href="#">Back to top</a></span></div></footer>
+
+<script>
+(() => {
+  const $ = (s, el = document) => el.querySelector(s);
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const ORIENT = { landscape: 'Landscape', portrait: 'Portrait', square: 'Square' };
+  const state = { theme: 'all', device: 'all', colour: 'all', o: 'landscape' };
+  let D;
+
+  function readHash() {
+    const p = new URLSearchParams(location.hash.slice(1));
+    for (const k of Object.keys(state)) if (p.get(k)) state[k] = p.get(k);
+  }
+  function writeHash() {
+    const p = new URLSearchParams();
+    for (const [k, v] of Object.entries(state)) if (!(v === 'all' || (k === 'o' && v === 'landscape'))) p.set(k, v);
+    const h = p.toString();
+    history.replaceState(null, '', h ? '#' + h : location.pathname + location.search);
+  }
+
+  function chips(id, key, items, render) {
+    const fs = $('#' + id);
+    // a filter with fewer than two real choices only adds noise
+    fs.hidden = items.length < 2;
+    fs.querySelectorAll('button').forEach(b => b.remove());
+    for (const it of items) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.dataset.key = key; b.dataset.val = it.id;
+      render(b, it);
+      fs.appendChild(b);
+    }
+  }
+
+  function imgFor(w) {
+    return w.images.find(i => i.orientation === state.o) || w.images[0];
+  }
+
+  function card(w) {
+    const t = imgFor(w);
+    const dl = w.images.map(i => `<a href="${esc(i.src)}" download>${ORIENT[i.orientation] || esc(i.orientation)}<small>${i.width} &times; ${i.height}</small></a>`).join('');
+    return `<figure style="--c:${esc(w.colour)}">
+      <a href="${esc(t.src)}"><img src="${esc(t.thumb)}" alt="${esc(w.title)}: ${esc((w.motifs || []).join(' and '))}" width="${t.orientation === 'portrait' ? 360 : 480}" height="${t.orientation === 'portrait' ? 480 : 360}" loading="lazy"></a>
+      <figcaption><b><i></i>${w.number ? esc(w.number) + ' &middot; ' : ''}${esc(w.title)}</b><span>${esc((w.motifs || []).join(' · '))}</span>
+        <span class="dl">${dl}</span></figcaption>
+    </figure>`;
+  }
+
+  function render() {
+    const devices = Object.fromEntries(D.devices.map(d => [d.id, d]));
+    const match = w => (state.theme === 'all' || w.theme === state.theme)
+      && (state.device === 'all' || w.device === state.device)
+      && (state.colour === 'all' || w.colourFamily === state.colour);
+    const shown = D.wallpapers.filter(match);
+
+    let html = '';
+    for (const t of D.themes) {
+      const inTheme = shown.filter(w => w.theme === t.id);
+      if (!inTheme.length) continue;
+      const devs = [...new Set(inTheme.map(w => w.device))];
+      const packs = devs.map(dev => {
+        const ws = inTheme.filter(w => w.device === dev);
+        const d = devices[dev] || { name: dev };
+        const pack = (t.packs || []).find(p => p.device === dev) || {};
+        const sizes = [...new Set(D.wallpapers.filter(w => w.theme === t.id && w.device === dev).flatMap(w => w.images.map(i => `${i.width} × ${i.height}`)))].join(' and ');
+        const acts = [
+          ...(pack.overviews || []).map(o => `<a class="btn" href="${esc(o.src)}">${esc(o.label)}</a>`),
+          pack.zip ? `<a class="btn solid" href="${esc(pack.zip)}" download>All of ${esc(d.name)} as ZIP</a>` : ''
+        ].join('');
+        const howto = pack.howto ? `<details class="howto"><summary>How to set it on the ${esc(d.name)}</summary><ol>${pack.howto.map(s => `<li>${esc(s)}</li>`).join('')}</ol></details>` : '';
+        return `<div class="pack">
+          <header style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px 24px;margin-bottom:16px">
+            <h3 style="margin:0"><b>${esc(d.name)}</b>${d.detail ? ' · ' + esc(d.detail) : ''}${d.use ? ' · ' + esc(d.use) : ''} · ${esc(sizes)}</h3>
+            <span class="acts">${acts}</span>
+          </header>
+          <div class="grid ${state.o}">${ws.map(card).join('')}</div>${howto}
+        </div>`;
+      }).join('');
+      html += `<section class="theme" id="theme-${esc(t.id)}">
+        <header><div><h2>${esc(t.name)} <em>${esc(t.tagline || '')}</em></h2><p class="meta">${esc(t.description || '')}</p></div>
+        <p class="meta">${inTheme.length} of ${D.wallpapers.filter(w => w.theme === t.id).length} wallpapers</p></header>
+        ${packs}
+      </section>`;
+    }
+    $('#sections').innerHTML = html;
+    $('#empty').hidden = shown.length > 0;
+    const imgs = shown.reduce((n, w) => n + w.images.length, 0);
+    $('#count').textContent = `${shown.length} wallpaper${shown.length === 1 ? '' : 's'} · ${imgs} images`;
+    const dirty = state.theme !== 'all' || state.device !== 'all' || state.colour !== 'all';
+    $('#reset').hidden = !dirty;
+    document.querySelectorAll('#filters button[data-key]').forEach(b => b.setAttribute('aria-pressed', String(state[b.dataset.key] === b.dataset.val)));
+    document.querySelectorAll('.tcard').forEach(a => a.setAttribute('aria-current', String(state.theme === a.dataset.theme)));
+    writeHash();
+  }
+
+  function build() {
+    const used = k => new Set(D.wallpapers.map(w => w[k]));
+    const usedColours = used('colourFamily'), usedDevices = used('device');
+
+    // stats
+    const imgs = D.wallpapers.reduce((n, w) => n + w.images.length, 0);
+    $('#stats').innerHTML = [[D.themes.length, D.themes.length === 1 ? 'theme' : 'themes'], [D.wallpapers.length, 'wallpapers'], [imgs, 'images'], [usedDevices.size, usedDevices.size === 1 ? 'device' : 'devices']]
+      .map(([n, l]) => `<li><b>${n}</b>${l}</li>`).join('');
+
+    // theme cards
+    $('#themes').innerHTML = D.themes.map(t => {
+      const ws = D.wallpapers.filter(w => w.theme === t.id);
+      const pics = ws.slice(0, 4).map(w => { const i = w.images.find(x => x.orientation === 'portrait') || w.images[0]; return `<img src="${esc(i.thumb)}" alt="" loading="lazy">`; }).join('');
+      const devs = [...new Set(ws.map(w => (D.devices.find(d => d.id === w.device) || {}).name || w.device))].join(', ');
+      return `<a class="tcard" href="#theme=${esc(t.id)}" data-theme="${esc(t.id)}">
+        <div class="mosaic">${pics}</div>
+        <div class="t"><b>${esc(t.name)}</b><span>${esc(t.tagline || '')}</span><span>${ws.length} wallpapers · ${esc(devs)}</span>
+        <span class="dots">${ws.map(w => `<i style="background:${esc(w.colour)}"></i>`).join('')}</span></div></a>`;
+    }).join('');
+
+    chips('f-theme', 'theme', [{ id: 'all', name: 'All' }, ...D.themes], (b, t) => { b.className = 'chip'; b.textContent = t.name; });
+    if (D.themes.length < 2) $('#f-theme').hidden = true;
+    const devs = D.devices.filter(d => usedDevices.has(d.id));
+    chips('f-device', 'device', [{ id: 'all', name: 'All' }, ...devs], (b, d) => { b.className = 'chip'; b.textContent = d.name; });
+    if (devs.length < 2) $('#f-device').hidden = true;
+    const cols = D.colours.filter(c => usedColours.has(c.id));
+    chips('f-colour', 'colour', [{ id: 'all', name: 'All colours' }, ...cols], (b, c) => {
+      if (c.id === 'all') { b.className = 'chip'; b.textContent = 'All'; return; }
+      b.className = 'sw'; b.style.setProperty('--c', c.hex); b.title = c.name;
+      b.innerHTML = `<i></i><span class="sr">${esc(c.name)}</span>`;
+    });
+    const orients = [...new Set(D.wallpapers.flatMap(w => w.images.map(i => i.orientation)))].map(o => ({ id: o, name: ORIENT[o] || o }));
+    chips('f-orient', 'o', orients, (b, o) => { b.className = 'chip'; b.textContent = o.name; });
+
+    $('#filters').hidden = false;
+    $('#filters').addEventListener('click', e => {
+      const b = e.target.closest('button[data-key]');
+      if (b) { state[b.dataset.key] = b.dataset.val; render(); }
+    });
+    const reset = () => { state.theme = state.device = state.colour = 'all'; render(); };
+    $('#reset').addEventListener('click', reset);
+    $('[data-reset]').addEventListener('click', reset);
+    $('#themes').addEventListener('click', e => {
+      const a = e.target.closest('.tcard'); if (!a) return;
+      e.preventDefault();
+      state.theme = state.theme === a.dataset.theme ? 'all' : a.dataset.theme;
+      render();
+      $('#filters').scrollIntoView({ block: 'start' });
+    });
+    addEventListener('hashchange', () => { readHash(); render(); });
+    render();
+  }
+
+  readHash();
+  fetch('wallpapers.json').then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(d => { D = d; build(); })
+    .catch(() => { $('#sections').innerHTML = '<p class="empty">The list of wallpapers could not be loaded. All images are in the <a href="https://github.com/hjorven/wallpapers/tree/main/themes">repository</a>.</p>'; });
+})();
+</script>
 </body>
 </html>
