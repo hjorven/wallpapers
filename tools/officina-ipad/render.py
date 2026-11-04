@@ -132,6 +132,20 @@ def scene_arch(p):
     d = np.minimum(d, sd_box(T(p, 0, 1.0, 0), np.array([1.95, 0.05, 0.27])))
     return np.maximum(d, np.abs(p[..., 0]) - 1.9)
 
+def scene_easel(p):
+    # Staffelei mit Bildtafel und Kugel davor, daneben ein Würfel auf dem Boden
+    legs = np.minimum.reduce([
+        sd_box(rot_z(T(p, -0.55, -0.35, 0.1), 0.18), np.array([0.04, 1.35, 0.04])),
+        sd_box(rot_z(T(p, 0.55, -0.35, 0.1), -0.18), np.array([0.04, 1.35, 0.04])),
+        sd_box(rot_x(T(p, 0, -0.4, -0.45), -0.35), np.array([0.04, 1.3, 0.04]))])
+    ledge = sd_box(T(p, 0, -0.62, 0.22), np.array([0.75, 0.035, 0.12]))
+    frame = np.maximum(sd_box(T(p, 0, 0.25, 0.12), np.array([0.72, 0.82, 0.05])),
+                       -sd_box(T(p, 0, 0.25, 0.12), np.array([0.62, 0.72, 0.2])))
+    panel = sd_box(T(p, 0, 0.25, 0.08), np.array([0.63, 0.73, 0.02]))
+    ball = sd_sphere(T(p, 0.05, 0.28, 0.42), 0.36)
+    cube = sd_box(rot_y(T(p, 0.85, -1.45, 0.65), 0.6), np.array([0.2, 0.2, 0.2])) - 0.02
+    return np.minimum.reduce([legs, ledge, frame, panel, ball, cube])
+
 def sd_hex(p, r, h):
     x = np.abs(p[..., 0]); z = np.abs(p[..., 2])
     d0 = np.maximum(x * 0.8660254 + z * 0.5, z) - r
@@ -355,4 +369,5 @@ if __name__ == "__main__":
     if "hex" in which: make_card("hex", scene_hex, (2.2, 2.6, 3.6), target=(0, -0.2, 0), fov=0.95, light=(-0.5, 0.9, 0.5), seed=6)
     if "rack" in which: make_card("rack", scene_rack, (2.4, 1.0, 5.2), target=(0, 0.05, 0), fov=0.9, light=(-0.6, 0.8, 0.7), seed=7)
     if "torus" in which: make_card("torus", scene_torus, (0, 0.4, 4.6), fov=0.95, method="floyd", seed=4)
+    if "easel" in which: make_card("easel", scene_easel, (1.3, 0.5, 4.0), target=(0.1, -0.45, 0), fov=0.95, light=(-0.6, 0.8, 0.6), seed=8)
     if "arch" in which: make_card("arch", scene_arch, (2.4, 0.4, 6.0), target=(0, 0.1, 0), fov=0.85, light=(-0.5, 0.7, 0.8), seed=5)

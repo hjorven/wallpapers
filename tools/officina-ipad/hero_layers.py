@@ -69,9 +69,11 @@ for k in range(N):
 sprite = np.concatenate(frames, axis=1)
 save_mask(sprite, f"{OUTDIR}/hero-ico.png")
 
-# Strahlen, ausgespart um Säule und Ikosaeder
+# Unterlage fürs Ikosaeder danach mit tools/hero_knock.py erzeugen (liest img/hero-ico.png)
+
+# Strahlen, nur um die Säule ausgespart (das Ikosaeder deckt sie mit seiner Unterlage selbst ab)
 r = R.rays(W, H, W * 0.5, H * 0.3, n=110)
-r &= ~R.binary_dilation(col_obj | union, iterations=6)
+r &= ~R.binary_dilation(col_obj, iterations=6)
 save_mask(r[:HC], f"{OUTDIR}/hero-rays.png")
 
 # Kontrollbild: alle Ebenen übereinander (Bild 0)

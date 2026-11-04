@@ -17,6 +17,7 @@ index.html                      gallery page, one <section> per set
 sets/<set>/full/                full-size images
 sets/<set>/thumbs/              480 px wide JPEG previews
 sets/<set>/<set>-all.zip        every image of the set in one ZIP
+sets/<set>/overview-*.png       optional overview images of the whole set
 tools/<set>/                    scripts the set was made with
 ```
 

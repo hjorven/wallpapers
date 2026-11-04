@@ -42,6 +42,8 @@
   .set h2 em { color: var(--accent-text); }
   .meta { color: var(--muted); font-size: 12px; margin: 0; max-width: 64ch; }
   .btn { display: inline-block; border: 1px solid var(--paper); padding: 10px 16px; text-decoration: none; text-transform: uppercase; font-size: 11px; letter-spacing: .14em; white-space: nowrap; }
+  .acts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .btn.ghost { border-color: var(--line); }
   .btn:hover { background: var(--paper); color: var(--ink); }
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 32px 20px; }
   figure { margin: 0; }
@@ -79,7 +81,7 @@
         <h2>Officina <em>for iPad</em></h2>
         <p class="meta">Twelve engravings for the Safari start page, each with its own planet and building, one per accent colour of the portfolio. 2160 &times; 1620 landscape and 1620 &times; 2160 portrait, made for the iPad (9th generation).</p>
       </div>
-      <a class="btn" href="sets/officina-ipad/officina-ipad-all.zip" download>All 24 as ZIP &middot; 3 MB</a>
+      <span class="acts"><a class="btn ghost" href="sets/officina-ipad/overview-landscape.png">Overview landscape</a><a class="btn ghost" href="sets/officina-ipad/overview-portrait.png">Overview portrait</a><a class="btn" href="sets/officina-ipad/officina-ipad-all.zip" download>All 24 as ZIP &middot; 3 MB</a></span>
     </header>
     <div class="grid">
       <figure style="--c:#2424ff">

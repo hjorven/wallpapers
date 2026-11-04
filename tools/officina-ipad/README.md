@@ -8,3 +8,5 @@ The scripts the twelve iPad wallpapers were made with, kept for reference. They 
 - `safari_bg2.py`, `safari_bg3.py`, `hero_layers.py`: earlier versions and helpers.
 
 The parts have to exist as `.npz` files in the working directory before `safari_bg_farben.py` runs.
+
+The current images (top strip left free and tinted, planets fully visible) and the two overview images got a last pass that is not part of these scripts yet.
