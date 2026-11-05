@@ -138,6 +138,17 @@
   details.howto { font-size: 14px; color: var(--muted); }
   details.howto summary { cursor: pointer; color: var(--text); }
   details.howto ol { padding-left: 18px; margin: 8px 0 0; }
+  .fit { display: grid; gap: 10px; border: 1px solid var(--line); border-radius: 12px; padding: 12px; }
+  .fit .row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .fit select, .fit input[type=number] { font: inherit; font-size: 14px; color: var(--text); background: var(--bg, transparent); border: 1px solid var(--line); border-radius: 8px; padding: 7px 8px; }
+  .fit select { width: 100%; }
+  .fit input[type=number] { width: 88px; }
+  .fit .x { color: var(--muted); }
+  .fit .linkbtn { font-size: 13px; }
+  .fit canvas { width: 100%; max-height: 300px; object-fit: contain; border-radius: 6px; background: #111; display: block; }
+  .fit input[type=range] { width: 100%; accent-color: var(--text); }
+  .fit small { color: var(--muted); font-size: 12px; line-height: 1.4; }
+  .fit .btn.primary { justify-self: start; }
   .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); background: var(--chip-on); color: var(--chip-on-text); padding: 8px 14px; border-radius: 999px; font-size: 13px; z-index: 20; }
 
   @media (max-width: 860px) {
@@ -207,6 +218,19 @@
       <div>
         <div class="eyebrow" style="margin-bottom:8px">Download</div>
         <div class="files" id="d-files"></div>
+      </div>
+      <div class="fit" id="fit">
+        <div class="eyebrow">Fit to your device</div>
+        <select id="f-dev" aria-label="Device"></select>
+        <div class="row">
+          <input type="number" id="f-w" min="320" max="8000" inputmode="numeric" aria-label="Width in pixels"><span class="x">×</span>
+          <input type="number" id="f-h" min="320" max="8000" inputmode="numeric" aria-label="Height in pixels"><span class="x">px</span>
+          <button class="linkbtn" type="button" id="f-turn" title="Swap width and height">Turn</button>
+        </div>
+        <canvas id="f-prev" width="300" height="300" aria-label="Preview of the fitted wallpaper"></canvas>
+        <label class="row" id="f-posrow"><small id="f-poslabel">Position</small><input type="range" id="f-pos" min="0" max="100" value="50"></label>
+        <small id="f-note"></small>
+        <button class="btn primary" type="button" id="f-dl">Download</button>
       </div>
       <details class="howto" id="d-howto"></details>
     </div>
@@ -321,6 +345,7 @@
     const list = shown.length ? shown : D.wallpapers;
     $('#d-prev').hidden = $('#d-next').hidden = list.length < 2 || !list.some(x => x.id === id);
     state.w = id; writeHash();
+    drawFit();
     if (!dlg.open) dlg.showModal();
   }
   function step(n) {
@@ -341,6 +366,88 @@
       dlg.appendChild(t); setTimeout(() => t.remove(), 1400);
     }, () => {});
   });
+
+
+  /* fit to a device: crop and scale in the browser, download at the exact size */
+  const PRESETS = [
+    ['iPad', [['iPad (9th gen)', 1620, 2160], ['iPad (10th gen) / iPad Air 11"', 1640, 2360], ['iPad mini', 1488, 2266], ['iPad Pro 11"', 1668, 2388], ['iPad Air 13" / iPad Pro 12.9"', 2048, 2732], ['iPad Pro 13" (M4)', 2064, 2752]]],
+    ['iPhone', [['iPhone SE', 750, 1334], ['iPhone 12 / 13 / 14', 1170, 2532], ['iPhone 15 / 16', 1179, 2556], ['iPhone 15 / 16 Plus', 1290, 2796], ['iPhone 16 Pro', 1206, 2622], ['iPhone 16 Pro Max', 1320, 2868]]],
+    ['Android', [['Pixel 8 / Galaxy S24', 1080, 2400], ['Pixel 8 Pro', 1344, 2992], ['Galaxy S24 Ultra', 1440, 3120]]],
+    ['Computer', [['Full HD', 1920, 1080], ['QHD', 2560, 1440], ['4K UHD', 3840, 2160], ['MacBook Air 13"', 2560, 1664], ['MacBook Pro 14"', 3024, 1964], ['Ultrawide', 3440, 1440]]]
+  ];
+  const store = { get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
+  const fit = Object.assign({ dev: 'iPad (9th gen)', w: 1620, h: 2160, pos: 50 }, store.get('wp-fit') || {});
+  const fsel = $('#f-dev');
+  fsel.innerHTML = PRESETS.map(([g, list]) => `<optgroup label="${g}">${list.map(([n, w, h]) => `<option value="${esc(n)}" data-w="${w}" data-h="${h}">${esc(n)} · ${w} × ${h}</option>`).join('')}</optgroup>`).join('') + '<option value="custom">Custom size</option>';
+  let srcImg = null, srcFor = '';
+  const pickSource = w => {  // the stored image whose shape is closest to the target
+    const r = fit.w / fit.h;
+    return w.images.slice().sort((a, b) => Math.abs(Math.log(a.width / a.height / r)) - Math.abs(Math.log(b.width / b.height / r)))[0];
+  };
+  function cropBox(sw, sh) {
+    const sc = Math.max(fit.w / sw, fit.h / sh), cw = fit.w / sc, ch = fit.h / sc;
+    const p = fit.pos / 100;
+    return { sx: (sw - cw) * p, sy: (sh - ch) * p, cw, ch, sc, axis: cw < sw - 1 ? 'x' : ch < sh - 1 ? 'y' : '' };
+  }
+  function drawFit() {
+    const w = byId[view.id]; if (!w) return;
+    const src = pickSource(w);
+    if (srcFor !== src.src) {
+      srcFor = src.src; srcImg = null;
+      const im = new Image(); im.onload = () => { if (srcFor === src.src) { srcImg = im; drawFit(); } }; im.src = src.src;
+    }
+    const cv = $('#f-prev'), box = cropBox(src.width, src.height);
+    const pw = 300, ph = Math.round(300 * fit.h / fit.w);
+    cv.width = pw; cv.height = Math.min(ph, 600); if (ph > 600) cv.width = Math.round(600 * fit.w / fit.h);
+    const ctx = cv.getContext('2d');
+    ctx.fillStyle = '#111'; ctx.fillRect(0, 0, cv.width, cv.height);
+    const sk = srcImg ? 1 : 0;
+    if (srcImg) ctx.drawImage(srcImg, box.sx, box.sy, box.cw, box.ch, 0, 0, cv.width, cv.height);
+    else { const th = $('#d-img'); if (th.complete && th.naturalWidth) { const k = th.naturalWidth / src.width; try { ctx.drawImage(th, box.sx * k, box.sy * k, box.cw * k, box.ch * k, 0, 0, cv.width, cv.height); } catch (e) {} } }
+    $('#f-posrow').hidden = !box.axis;
+    $('#f-poslabel').textContent = box.axis === 'x' ? 'Left – right' : 'Top – bottom';
+    const name = ORIENT[src.orientation] || src.orientation;
+    const pct = Math.round((1 - (box.cw * box.ch) / (src.width * src.height)) * 100);
+    let note = `Made from the ${name.toLowerCase()} image (${src.width} × ${src.height})` + (pct > 0 ? `, ${pct}% cut away` : '') + '.';
+    if (box.sc > 1.15) note += ` Enlarged ×${box.sc.toFixed(1)}, so it may look a little soft.`;
+    $('#f-note').textContent = note;
+    $('#f-dl').disabled = !sk;
+    $('#f-dl').textContent = `Download ${fit.w} × ${fit.h}`;
+  }
+  function syncFitInputs() {
+    fsel.value = PRESETS.some(([, l]) => l.some(([n]) => n === fit.dev)) ? fit.dev : 'custom';
+    $('#f-w').value = fit.w; $('#f-h').value = fit.h; $('#f-pos').value = fit.pos;
+  }
+  const saveFit = () => { store.set('wp-fit', fit); drawFit(); };
+  fsel.addEventListener('change', () => {
+    const o = fsel.selectedOptions[0];
+    if (o.value !== 'custom') {
+      let w = +o.dataset.w, h = +o.dataset.h;
+      if (view.o === 'landscape' && h > w && fsel.value.startsWith('iPad')) [w, h] = [h, w];  // iPads follow the preview format
+      Object.assign(fit, { dev: o.value, w, h, pos: 50 });
+    } else fit.dev = 'custom';
+    syncFitInputs(); saveFit();
+  });
+  const sizeInput = () => {
+    const w = Math.round(+$('#f-w').value), h = Math.round(+$('#f-h').value);
+    if (w >= 320 && h >= 320 && w <= 8000 && h <= 8000) { Object.assign(fit, { w, h, dev: 'custom' }); fsel.value = 'custom'; saveFit(); }
+  };
+  $('#f-w').addEventListener('change', sizeInput); $('#f-h').addEventListener('change', sizeInput);
+  $('#f-turn').addEventListener('click', () => { [fit.w, fit.h] = [fit.h, fit.w]; fit.pos = 50; syncFitInputs(); saveFit(); });
+  $('#f-pos').addEventListener('input', () => { fit.pos = +$('#f-pos').value; saveFit(); });
+  $('#f-dl').addEventListener('click', () => {
+    const w = byId[view.id]; if (!w || !srcImg) return;
+    const src = pickSource(w), box = cropBox(src.width, src.height);
+    const cv = document.createElement('canvas'); cv.width = fit.w; cv.height = fit.h;
+    const ctx = cv.getContext('2d'); ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(srcImg, box.sx, box.sy, box.cw, box.ch, 0, 0, fit.w, fit.h);
+    cv.toBlob(b => {
+      if (!b) return;
+      const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `${w.id}-${fit.w}x${fit.h}.jpg`;
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    }, 'image/jpeg', 0.93);
+  });
+  syncFitInputs();
 
   function build() {
     byId = Object.fromEntries(D.wallpapers.map(w => [w.id, w]));
