@@ -270,23 +270,22 @@ def render(w, h, v, rng):
         uw = x1 - x0
         plate_mask[int(y0):int(y1), int(x0):int(x1)] = True
         # display window: wide and shallow, left of centre like on the real units
-        wx0 = x0 + uw * (0.12 if kind != "cd" else 0.36)
-        wx1 = wx0 + uw * (0.5 if kind != "cd" else 0.5)
-        wy0 = y0 + uh * 0.28
-        wy1 = y0 + uh * 0.66
+        wx0 = x0 + uw * 0.04
+        wx1 = x1 - uw * 0.04
+        wy0 = y0 + uh * 0.21
+        wy1 = y0 + uh * 0.86
         win_mask[int(wy0):int(wy1), int(wx0):int(wx1)] = True
         window(p, kind, wx0, wy0, wx1, wy1, V, R, rng)
         # printed legends on the aluminium (no knobs, no buttons)
         f1 = lfont(uh * 0.05)
         brand, under = UNIT_LABELS[kind]
-        dp.text((x0 + uw * 0.04, y0 + uh * 0.1), brand, font=f1, fill=255)
-        dp.text((x0 + uw * 0.04 + uw * 0.0, y0 + uh * 0.1 + uh * 0.07), f"Model {chr(65 + int(rng.integers(0, 20)))}-{int(rng.integers(100, 990))}", font=lfont(uh * 0.04), fill=200)
-        dp.text(((wx0 + wx1) / 2, wy1 + uh * 0.06), under, font=lfont(uh * 0.045), fill=255, anchor="mm")
+        dp.text((x0 + uw * 0.04, y0 + uh * 0.05), brand, font=f1, fill=255)
+        dp.text((x0 + uw * 0.04 + uw * 0.0, y0 + uh * 0.115), f"Model {chr(65 + int(rng.integers(0, 20)))}-{int(rng.integers(100, 990))}", font=lfont(uh * 0.04), fill=200)
+        dp.text(((wx0 + wx1) / 2, wy1 + uh * 0.065), under, font=lfont(uh * 0.045), fill=255, anchor="mm")
         # fine engraved lines across the plate
-        dp.line([(x0 + uw * 0.04, y1 - uh * 0.16), (x1 - uw * 0.04, y1 - uh * 0.16)], fill=110, width=max(1, int(s * 0.0012)))
         dp.line([(x0, y1 - uh * 0.02), (x1, y1 - uh * 0.02)], fill=80, width=max(1, int(s * 0.002)))
         if kind == "power" and badge is None:
-            badge = (x1 - uw * 0.16, y1 - uh * 0.36, x1 - uw * 0.06, y1 - uh * 0.24)
+            badge = (x1 - uw * 0.14, y0 + uh * 0.05, x1 - uw * 0.04, y0 + uh * 0.15)
     # aluminium
     nb = rng.random((H, max(4, W // 25))).astype(np.float32)
     br = np.asarray(Image.fromarray((nb * 255).astype(np.uint8)).resize((W, H), Image.BILINEAR), np.float32) / 255
