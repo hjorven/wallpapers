@@ -5,8 +5,8 @@ from common import hexrgb, mix, glow, grain, to_image, col
 
 ID = "cassette"
 NAME = "Cassette Futurism"
-TAGLINE = "Phosphor screens in beige plastic"
-DESCRIPTION = ("The future as imagined around 1979: a curved tube screen set in a chunky plastic console, "
+TAGLINE = "Phosphor screens of the 1970s future"
+DESCRIPTION = ("The future as imagined around 1979: a curved tube screen in a narrow plastic rim, "
                "with radar sweeps, wire terrain and readouts glowing in green or amber phosphor.")
 FORMAT = "jpg"
 
@@ -156,49 +156,14 @@ def render(w, h, v, rng):
     img = grain(img, rng, 3)
     lw = max(2, int(s * 0.0022))
     landscape = W > H
-    m = s * 0.07
-    # screen rectangle; leave room for a control strip
-    if landscape:
-        sx0, sy0, sx1, sy1 = m, m, W - m - s * 0.22, H - m
-        strip = (sx1 + m * 0.6, m, W - m * 0.7, H - m)
-    else:
-        sx0, sy0, sx1, sy1 = m, m, W - m, H - m - s * 0.3
-        strip = (m, sy1 + m * 0.6, W - m, H - m * 0.7)
+    # only the tube: a narrow plastic rim around the curved screen, no controls
+    m = s * 0.035
+    sx0, sy0, sx1, sy1 = m, m, W - m, H - m
     base = Image.fromarray(np.clip(img, 0, 255).astype(np.uint8))
     d = ImageDraw.Draw(base)
     rad = s * 0.06
-    # recess shadow and screen glass
-    d.rounded_rectangle([sx0 - s * 0.018, sy0 - s * 0.018, sx1 + s * 0.018, sy1 + s * 0.018], rad * 1.2, fill=col(B * 0.55))
+    d.rounded_rectangle([sx0 - s * 0.012, sy0 - s * 0.012, sx1 + s * 0.012, sy1 + s * 0.012], rad * 1.2, fill=col(B * 0.55))
     d.rounded_rectangle([sx0, sy0, sx1, sy1], rad, fill=(8, 10, 9))
-    # control strip: buttons, slots and a stripe of accent colour
-    x0, y0, x1, y1 = strip
-    d.rounded_rectangle(strip, s * 0.02, fill=col(B * 0.82))
-    if landscape:
-        d.rectangle([x0, y0 + (y1 - y0) * 0.06, x1, y0 + (y1 - y0) * 0.09], fill=col(A))
-        for k in range(6):
-            yy = y0 + (y1 - y0) * (0.16 + k * 0.08)
-            d.rounded_rectangle([x0 + (x1 - x0) * 0.15, yy, x1 - (x1 - x0) * 0.15, yy + (y1 - y0) * 0.05], s * 0.006, fill=col(B * 0.5 if k % 3 else A * 0.9))
-        cx, cy, r = (x0 + x1) / 2, y0 + (y1 - y0) * 0.78, (x1 - x0) * 0.3
-        d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=col(B * 0.45))
-        d.ellipse([cx - r * 0.7, cy - r * 0.7, cx + r * 0.7, cy + r * 0.7], fill=col(B * 0.9))
-        for k in range(10):  # speaker grille
-            yy = y1 - (y1 - y0) * 0.04 - k * s * 0.008
-        d.rectangle([x0 + (x1 - x0) * 0.2, y1 - (y1 - y0) * 0.06, x1 - (x1 - x0) * 0.2, y1 - (y1 - y0) * 0.045], fill=col(B * 0.35))
-    else:
-        d.rectangle([x0 + (x1 - x0) * 0.03, y0, x0 + (x1 - x0) * 0.05, y1], fill=col(A))
-        for k in range(8):
-            xx = x0 + (x1 - x0) * (0.1 + k * 0.065)
-            d.rounded_rectangle([xx, y0 + (y1 - y0) * 0.2, xx + (x1 - x0) * 0.045, y0 + (y1 - y0) * 0.55], s * 0.006, fill=col(B * 0.5 if k % 3 else A * 0.9))
-        cx, cy, r = x0 + (x1 - x0) * 0.82, (y0 + y1) / 2, (y1 - y0) * 0.32
-        d.ellipse([cx - r, cy - r, cx + r, cy + r], fill=col(B * 0.45))
-        d.ellipse([cx - r * 0.7, cy - r * 0.7, cx + r * 0.7, cy + r * 0.7], fill=col(B * 0.9))
-        d.rectangle([x0 + (x1 - x0) * 0.1, y0 + (y1 - y0) * 0.7, x0 + (x1 - x0) * 0.6, y0 + (y1 - y0) * 0.78], fill=col(B * 0.35))
-    # small LEDs
-    for k in range(3):
-        lx = sx0 + k * s * 0.03 + s * 0.01
-        ly = sy1 + s * 0.035 if landscape else sy1 + s * 0.03
-        if ly + s * 0.01 < H:
-            d.ellipse([lx, ly, lx + s * 0.012, ly + s * 0.012], fill=col(P if k == 0 else A))
     img = np.asarray(base, np.float32)
 
     # phosphor picture

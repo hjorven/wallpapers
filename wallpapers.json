@@ -266,8 +266,8 @@
     {
       "id": "cassette",
       "name": "Cassette Futurism",
-      "tagline": "Phosphor screens in beige plastic",
-      "description": "The future as imagined around 1979: a curved tube screen set in a chunky plastic console, with radar sweeps, wire terrain and readouts glowing in green or amber phosphor.",
+      "tagline": "Phosphor screens of the 1970s future",
+      "description": "The future as imagined around 1979: a curved tube screen in a narrow plastic rim, with radar sweeps, wire terrain and readouts glowing in green or amber phosphor.",
       "generator": "tools/gen/cassette.py",
       "packs": [
         {
@@ -446,8 +446,8 @@
     {
       "id": "silverface",
       "name": "Silver Face",
-      "tagline": "Brushed aluminium and glowing VFDs",
-      "description": "The silver hi-fi stacks of the late 1970s: brushed aluminium fronts, vacuum fluorescent displays glowing cyan-green, level meters, red indicator LEDs and heavy knurled knobs.",
+      "tagline": "Glowing VFD displays behind smoked glass",
+      "description": "Close-ups of the vacuum fluorescent displays of late-1970s silver hi-fi: cyan-green phosphor segments under a fine metal mesh, thin filament wires, the ghost of unlit segments and printed scales on the smoked glass, framed by brushed aluminium.",
       "generator": "tools/gen/silverface.py",
       "packs": [
         {
@@ -3929,7 +3929,7 @@
           "height": 1620,
           "src": "themes/cassette/ipad/full/01-nostromo-quer.jpg",
           "thumb": "themes/cassette/ipad/thumbs/01-nostromo-quer.jpg",
-          "bytes": 186737
+          "bytes": 180239
         },
         {
           "orientation": "portrait",
@@ -3937,7 +3937,7 @@
           "height": 2160,
           "src": "themes/cassette/ipad/full/01-nostromo-hoch.jpg",
           "thumb": "themes/cassette/ipad/thumbs/01-nostromo-hoch.jpg",
-          "bytes": 191706
+          "bytes": 177060
         }
       ]
     },
@@ -3960,7 +3960,7 @@
           "height": 1620,
           "src": "themes/cassette/ipad/full/02-amber-terminal-quer.jpg",
           "thumb": "themes/cassette/ipad/thumbs/02-amber-terminal-quer.jpg",
-          "bytes": 217598
+          "bytes": 268841
         },
         {
           "orientation": "portrait",
@@ -3968,7 +3968,7 @@
           "height": 2160,
           "src": "themes/cassette/ipad/full/02-amber-terminal-hoch.jpg",
           "thumb": "themes/cassette/ipad/thumbs/02-amber-terminal-hoch.jpg",
-          "bytes": 210120
+          "bytes": 295454
         }
       ]
     },
@@ -3990,7 +3990,7 @@
           "height": 1620,
           "src": "themes/cassette/ipad/full/03-orbit-plot-quer.jpg",
           "thumb": "themes/cassette/ipad/thumbs/03-orbit-plot-quer.jpg",
-          "bytes": 174951
+          "bytes": 160422
         },
         {
           "orientation": "portrait",
@@ -3998,7 +3998,7 @@
           "height": 2160,
           "src": "themes/cassette/ipad/full/03-orbit-plot-hoch.jpg",
           "thumb": "themes/cassette/ipad/thumbs/03-orbit-plot-hoch.jpg",
-          "bytes": 184135
+          "bytes": 164401
         }
       ]
     },
@@ -4021,7 +4021,7 @@
           "height": 1620,
           "src": "themes/cassette/ipad/full/04-deep-scan-quer.jpg",
           "thumb": "themes/cassette/ipad/thumbs/04-deep-scan-quer.jpg",
-          "bytes": 360023
+          "bytes": 422846
         },
         {
           "orientation": "portrait",
@@ -4029,7 +4029,7 @@
           "height": 2160,
           "src": "themes/cassette/ipad/full/04-deep-scan-hoch.jpg",
           "thumb": "themes/cassette/ipad/thumbs/04-deep-scan-hoch.jpg",
-          "bytes": 344351
+          "bytes": 353113
         }
       ]
     },
@@ -4052,7 +4052,7 @@
           "height": 1620,
           "src": "themes/cassette/ipad/full/05-signal-quer.jpg",
           "thumb": "themes/cassette/ipad/thumbs/05-signal-quer.jpg",
-          "bytes": 253405
+          "bytes": 261686
         },
         {
           "orientation": "portrait",
@@ -4060,7 +4060,7 @@
           "height": 2160,
           "src": "themes/cassette/ipad/full/05-signal-hoch.jpg",
           "thumb": "themes/cassette/ipad/thumbs/05-signal-hoch.jpg",
-          "bytes": 257826
+          "bytes": 280308
         }
       ]
     },
@@ -4082,7 +4082,7 @@
           "height": 1620,
           "src": "themes/cassette/ipad/full/06-crimson-ops-quer.jpg",
           "thumb": "themes/cassette/ipad/thumbs/06-crimson-ops-quer.jpg",
-          "bytes": 156890
+          "bytes": 152842
         },
         {
           "orientation": "portrait",
@@ -4090,7 +4090,7 @@
           "height": 2160,
           "src": "themes/cassette/ipad/full/06-crimson-ops-hoch.jpg",
           "thumb": "themes/cassette/ipad/thumbs/06-crimson-ops-hoch.jpg",
-          "bytes": 161929
+          "bytes": 147041
         }
       ]
     },
@@ -4113,7 +4113,7 @@
           "height": 1620,
           "src": "themes/cassette/ipad/full/07-ice-console-quer.jpg",
           "thumb": "themes/cassette/ipad/thumbs/07-ice-console-quer.jpg",
-          "bytes": 171322
+          "bytes": 157023
         },
         {
           "orientation": "portrait",
@@ -4121,7 +4121,7 @@
           "height": 2160,
           "src": "themes/cassette/ipad/full/07-ice-console-hoch.jpg",
           "thumb": "themes/cassette/ipad/thumbs/07-ice-console-hoch.jpg",
-          "bytes": 174389
+          "bytes": 152253
         }
       ]
     },
@@ -4143,7 +4143,7 @@
           "height": 1620,
           "src": "themes/cassette/ipad/full/08-mother-quer.jpg",
           "thumb": "themes/cassette/ipad/thumbs/08-mother-quer.jpg",
-          "bytes": 218140
+          "bytes": 219192
         },
         {
           "orientation": "portrait",
@@ -4151,7 +4151,7 @@
           "height": 2160,
           "src": "themes/cassette/ipad/full/08-mother-hoch.jpg",
           "thumb": "themes/cassette/ipad/thumbs/08-mother-hoch.jpg",
-          "bytes": 206377
+          "bytes": 238961
         }
       ]
     },
@@ -4173,7 +4173,7 @@
           "height": 1620,
           "src": "themes/cassette/ipad/full/09-tracking-quer.jpg",
           "thumb": "themes/cassette/ipad/thumbs/09-tracking-quer.jpg",
-          "bytes": 372122
+          "bytes": 428897
         },
         {
           "orientation": "portrait",
@@ -4181,7 +4181,7 @@
           "height": 2160,
           "src": "themes/cassette/ipad/full/09-tracking-hoch.jpg",
           "thumb": "themes/cassette/ipad/thumbs/09-tracking-hoch.jpg",
-          "bytes": 336975
+          "bytes": 360297
         }
       ]
     },
@@ -4204,7 +4204,7 @@
           "height": 1620,
           "src": "themes/cassette/ipad/full/10-lab-scope-quer.jpg",
           "thumb": "themes/cassette/ipad/thumbs/10-lab-scope-quer.jpg",
-          "bytes": 240825
+          "bytes": 248578
         },
         {
           "orientation": "portrait",
@@ -4212,7 +4212,7 @@
           "height": 2160,
           "src": "themes/cassette/ipad/full/10-lab-scope-hoch.jpg",
           "thumb": "themes/cassette/ipad/thumbs/10-lab-scope-hoch.jpg",
-          "bytes": 245654
+          "bytes": 265108
         }
       ]
     },
@@ -6967,15 +6967,15 @@
       ]
     },
     {
-      "id": "silverface-integrated",
+      "id": "silverface-peak-level",
       "theme": "silverface",
       "device": "ipad-9",
       "number": "01",
-      "title": "Integrated",
-      "colour": "#3dffd0",
+      "title": "Peak Level",
+      "colour": "#43ffd2",
       "colourFamily": "cyan",
       "motifs": [
-        "Power meters",
+        "Level meter",
         "Cyan VFD"
       ],
       "images": [
@@ -6983,89 +6983,58 @@
           "orientation": "landscape",
           "width": 2160,
           "height": 1620,
-          "src": "themes/silverface/ipad/full/01-integrated-quer.jpg",
-          "thumb": "themes/silverface/ipad/thumbs/01-integrated-quer.jpg",
-          "bytes": 342649
+          "src": "themes/silverface/ipad/full/01-peak-level-quer.jpg",
+          "thumb": "themes/silverface/ipad/thumbs/01-peak-level-quer.jpg",
+          "bytes": 301828
         },
         {
           "orientation": "portrait",
           "width": 1620,
           "height": 2160,
-          "src": "themes/silverface/ipad/full/01-integrated-hoch.jpg",
-          "thumb": "themes/silverface/ipad/thumbs/01-integrated-hoch.jpg",
-          "bytes": 409285
+          "src": "themes/silverface/ipad/full/01-peak-level-hoch.jpg",
+          "thumb": "themes/silverface/ipad/thumbs/01-peak-level-hoch.jpg",
+          "bytes": 333907
         }
       ]
     },
     {
-      "id": "silverface-receiver",
+      "id": "silverface-fm-stereo",
       "theme": "silverface",
       "device": "ipad-9",
       "number": "02",
-      "title": "Receiver",
-      "colour": "#5ff2e0",
+      "title": "FM Stereo",
+      "colour": "#55f5e2",
       "colourFamily": "cyan",
       "motifs": [
-        "Tuning dial",
-        "Silver"
+        "Tuner",
+        "Stereo"
       ],
       "images": [
         {
           "orientation": "landscape",
           "width": 2160,
           "height": 1620,
-          "src": "themes/silverface/ipad/full/02-receiver-quer.jpg",
-          "thumb": "themes/silverface/ipad/thumbs/02-receiver-quer.jpg",
-          "bytes": 328550
+          "src": "themes/silverface/ipad/full/02-fm-stereo-quer.jpg",
+          "thumb": "themes/silverface/ipad/thumbs/02-fm-stereo-quer.jpg",
+          "bytes": 308382
         },
         {
           "orientation": "portrait",
           "width": 1620,
           "height": 2160,
-          "src": "themes/silverface/ipad/full/02-receiver-hoch.jpg",
-          "thumb": "themes/silverface/ipad/thumbs/02-receiver-hoch.jpg",
-          "bytes": 383466
+          "src": "themes/silverface/ipad/full/02-fm-stereo-hoch.jpg",
+          "thumb": "themes/silverface/ipad/thumbs/02-fm-stereo-hoch.jpg",
+          "bytes": 334224
         }
       ]
     },
     {
-      "id": "silverface-tape-deck",
+      "id": "silverface-analyser",
       "theme": "silverface",
       "device": "ipad-9",
       "number": "03",
-      "title": "Tape Deck",
-      "colour": "#6aff9a",
-      "colourFamily": "green",
-      "motifs": [
-        "Cassette",
-        "Level bars"
-      ],
-      "images": [
-        {
-          "orientation": "landscape",
-          "width": 2160,
-          "height": 1620,
-          "src": "themes/silverface/ipad/full/03-tape-deck-quer.jpg",
-          "thumb": "themes/silverface/ipad/thumbs/03-tape-deck-quer.jpg",
-          "bytes": 361390
-        },
-        {
-          "orientation": "portrait",
-          "width": 1620,
-          "height": 2160,
-          "src": "themes/silverface/ipad/full/03-tape-deck-hoch.jpg",
-          "thumb": "themes/silverface/ipad/thumbs/03-tape-deck-hoch.jpg",
-          "bytes": 398373
-        }
-      ]
-    },
-    {
-      "id": "silverface-spectrum",
-      "theme": "silverface",
-      "device": "ipad-9",
-      "number": "04",
-      "title": "Spectrum",
-      "colour": "#5fd8ff",
+      "title": "Analyser",
+      "colour": "#5fd2ff",
       "colourFamily": "blue",
       "motifs": [
         "Spectrum analyser"
@@ -7075,17 +7044,48 @@
           "orientation": "landscape",
           "width": 2160,
           "height": 1620,
-          "src": "themes/silverface/ipad/full/04-spectrum-quer.jpg",
-          "thumb": "themes/silverface/ipad/thumbs/04-spectrum-quer.jpg",
-          "bytes": 390799
+          "src": "themes/silverface/ipad/full/03-analyser-quer.jpg",
+          "thumb": "themes/silverface/ipad/thumbs/03-analyser-quer.jpg",
+          "bytes": 309627
         },
         {
           "orientation": "portrait",
           "width": 1620,
           "height": 2160,
-          "src": "themes/silverface/ipad/full/04-spectrum-hoch.jpg",
-          "thumb": "themes/silverface/ipad/thumbs/04-spectrum-hoch.jpg",
-          "bytes": 424289
+          "src": "themes/silverface/ipad/full/03-analyser-hoch.jpg",
+          "thumb": "themes/silverface/ipad/thumbs/03-analyser-hoch.jpg",
+          "bytes": 333003
+        }
+      ]
+    },
+    {
+      "id": "silverface-tape-counter",
+      "theme": "silverface",
+      "device": "ipad-9",
+      "number": "04",
+      "title": "Tape Counter",
+      "colour": "#6dff9e",
+      "colourFamily": "green",
+      "motifs": [
+        "Tape counter",
+        "Green VFD"
+      ],
+      "images": [
+        {
+          "orientation": "landscape",
+          "width": 2160,
+          "height": 1620,
+          "src": "themes/silverface/ipad/full/04-tape-counter-quer.jpg",
+          "thumb": "themes/silverface/ipad/thumbs/04-tape-counter-quer.jpg",
+          "bytes": 299764
+        },
+        {
+          "orientation": "portrait",
+          "width": 1620,
+          "height": 2160,
+          "src": "themes/silverface/ipad/full/04-tape-counter-hoch.jpg",
+          "thumb": "themes/silverface/ipad/thumbs/04-tape-counter-hoch.jpg",
+          "bytes": 331123
         }
       ]
     },
@@ -7095,11 +7095,10 @@
       "device": "ipad-9",
       "number": "05",
       "title": "Champagne",
-      "colour": "#3dffd0",
+      "colour": "#43ffd2",
       "colourFamily": "yellow",
       "motifs": [
-        "Champagne gold",
-        "Cyan"
+        "Champagne frame"
       ],
       "images": [
         {
@@ -7108,7 +7107,7 @@
           "height": 1620,
           "src": "themes/silverface/ipad/full/05-champagne-quer.jpg",
           "thumb": "themes/silverface/ipad/thumbs/05-champagne-quer.jpg",
-          "bytes": 336081
+          "bytes": 316125
         },
         {
           "orientation": "portrait",
@@ -7116,17 +7115,17 @@
           "height": 2160,
           "src": "themes/silverface/ipad/full/05-champagne-hoch.jpg",
           "thumb": "themes/silverface/ipad/thumbs/05-champagne-hoch.jpg",
-          "bytes": 400506
+          "bytes": 339403
         }
       ]
     },
     {
-      "id": "silverface-amber-tuner",
+      "id": "silverface-amber",
       "theme": "silverface",
       "device": "ipad-9",
       "number": "06",
-      "title": "Amber Tuner",
-      "colour": "#ffb04a",
+      "title": "Amber",
+      "colour": "#ffb24a",
       "colourFamily": "orange",
       "motifs": [
         "Amber VFD"
@@ -7136,17 +7135,17 @@
           "orientation": "landscape",
           "width": 2160,
           "height": 1620,
-          "src": "themes/silverface/ipad/full/06-amber-tuner-quer.jpg",
-          "thumb": "themes/silverface/ipad/thumbs/06-amber-tuner-quer.jpg",
-          "bytes": 331575
+          "src": "themes/silverface/ipad/full/06-amber-quer.jpg",
+          "thumb": "themes/silverface/ipad/thumbs/06-amber-quer.jpg",
+          "bytes": 302813
         },
         {
           "orientation": "portrait",
           "width": 1620,
           "height": 2160,
-          "src": "themes/silverface/ipad/full/06-amber-tuner-hoch.jpg",
-          "thumb": "themes/silverface/ipad/thumbs/06-amber-tuner-hoch.jpg",
-          "bytes": 392181
+          "src": "themes/silverface/ipad/full/06-amber-hoch.jpg",
+          "thumb": "themes/silverface/ipad/thumbs/06-amber-hoch.jpg",
+          "bytes": 332318
         }
       ]
     },
@@ -7156,11 +7155,10 @@
       "device": "ipad-9",
       "number": "07",
       "title": "Black Face",
-      "colour": "#3dffd0",
+      "colour": "#43ffd2",
       "colourFamily": "mono",
       "motifs": [
-        "Black front",
-        "Cyan"
+        "Black frame"
       ],
       "images": [
         {
@@ -7169,7 +7167,7 @@
           "height": 1620,
           "src": "themes/silverface/ipad/full/07-black-face-quer.jpg",
           "thumb": "themes/silverface/ipad/thumbs/07-black-face-quer.jpg",
-          "bytes": 225395
+          "bytes": 193797
         },
         {
           "orientation": "portrait",
@@ -7177,38 +7175,38 @@
           "height": 2160,
           "src": "themes/silverface/ipad/full/07-black-face-hoch.jpg",
           "thumb": "themes/silverface/ipad/thumbs/07-black-face-hoch.jpg",
-          "bytes": 261036
+          "bytes": 212814
         }
       ]
     },
     {
-      "id": "silverface-blue-hour",
+      "id": "silverface-midnight-blue",
       "theme": "silverface",
       "device": "ipad-9",
       "number": "08",
-      "title": "Blue Hour",
-      "colour": "#4fa8ff",
+      "title": "Midnight Blue",
+      "colour": "#6aa8ff",
       "colourFamily": "blue",
       "motifs": [
         "Blue VFD",
-        "Deck"
+        "Clock"
       ],
       "images": [
         {
           "orientation": "landscape",
           "width": 2160,
           "height": 1620,
-          "src": "themes/silverface/ipad/full/08-blue-hour-quer.jpg",
-          "thumb": "themes/silverface/ipad/thumbs/08-blue-hour-quer.jpg",
-          "bytes": 364223
+          "src": "themes/silverface/ipad/full/08-midnight-blue-quer.jpg",
+          "thumb": "themes/silverface/ipad/thumbs/08-midnight-blue-quer.jpg",
+          "bytes": 300381
         },
         {
           "orientation": "portrait",
           "width": 1620,
           "height": 2160,
-          "src": "themes/silverface/ipad/full/08-blue-hour-hoch.jpg",
-          "thumb": "themes/silverface/ipad/thumbs/08-blue-hour-hoch.jpg",
-          "bytes": 408723
+          "src": "themes/silverface/ipad/full/08-midnight-blue-hoch.jpg",
+          "thumb": "themes/silverface/ipad/thumbs/08-midnight-blue-hoch.jpg",
+          "bytes": 330396
         }
       ]
     },
@@ -7221,8 +7219,7 @@
       "colour": "#2fffc4",
       "colourFamily": "cyan",
       "motifs": [
-        "VU meters",
-        "Studio"
+        "Studio meters"
       ],
       "images": [
         {
@@ -7231,7 +7228,7 @@
           "height": 1620,
           "src": "themes/silverface/ipad/full/09-studio-quer.jpg",
           "thumb": "themes/silverface/ipad/thumbs/09-studio-quer.jpg",
-          "bytes": 367496
+          "bytes": 306177
         },
         {
           "orientation": "portrait",
@@ -7239,38 +7236,38 @@
           "height": 2160,
           "src": "themes/silverface/ipad/full/09-studio-hoch.jpg",
           "thumb": "themes/silverface/ipad/thumbs/09-studio-hoch.jpg",
-          "bytes": 416060
+          "bytes": 337818
         }
       ]
     },
     {
-      "id": "silverface-midnight",
+      "id": "silverface-night-green",
       "theme": "silverface",
       "device": "ipad-9",
       "number": "10",
-      "title": "Midnight",
-      "colour": "#7dff6a",
+      "title": "Night Green",
+      "colour": "#86ff6a",
       "colourFamily": "green",
       "motifs": [
-        "Dark grey",
-        "Green VFD"
+        "Green VFD",
+        "Dark frame"
       ],
       "images": [
         {
           "orientation": "landscape",
           "width": 2160,
           "height": 1620,
-          "src": "themes/silverface/ipad/full/10-midnight-quer.jpg",
-          "thumb": "themes/silverface/ipad/thumbs/10-midnight-quer.jpg",
-          "bytes": 231639
+          "src": "themes/silverface/ipad/full/10-night-green-quer.jpg",
+          "thumb": "themes/silverface/ipad/thumbs/10-night-green-quer.jpg",
+          "bytes": 210914
         },
         {
           "orientation": "portrait",
           "width": 1620,
           "height": 2160,
-          "src": "themes/silverface/ipad/full/10-midnight-hoch.jpg",
-          "thumb": "themes/silverface/ipad/thumbs/10-midnight-hoch.jpg",
-          "bytes": 286518
+          "src": "themes/silverface/ipad/full/10-night-green-hoch.jpg",
+          "thumb": "themes/silverface/ipad/thumbs/10-night-green-hoch.jpg",
+          "bytes": 232313
         }
       ]
     }
