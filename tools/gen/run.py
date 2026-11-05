@@ -25,7 +25,7 @@ from common import SIZES  # noqa: E402
 STYLES = ["shanshui", "suminagashi", "terrazzo", "seigaiha", "azulejo",
           "artdeco", "memphis", "topo", "tessellae", "neonnoir",
           "cassette", "biotech", "moonlit", "vectorwave", "spaceage",
-          "terminal", "aerodeco", "chronometry", "heavymetal", "lowpoly"]
+          "terminal", "aerodeco", "chronometry", "heavymetal", "lowpoly", "silverface"]
 DEVICE = "ipad-9"
 HOWTO = ["Tap Landscape or Portrait, then hold the image and choose Save to Photos.",
          "In Safari, open a new tab, tap Edit at the bottom of the start page and turn on Background Image.",

@@ -33,6 +33,7 @@ All themes are made for the iPad (9th generation) Safari start page, 2160 × 162
 | Mechanical Chronometry | Clockwork sketched on old paper | 10 |
 | Industrial Heavy Metal | Riveted steel and diesel-age paint | 10 |
 | Silicon Low-Poly | Faceted terrain, wafers and gold traces | 10 |
+| Silver Face | Late-1970s hi-fi: brushed aluminium and VFDs | 10 |
 
 Every theme has landscape and portrait versions of each wallpaper and a ZIP with all of them.
 
