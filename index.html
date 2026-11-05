@@ -370,10 +370,14 @@
 
   /* fit to a device: crop and scale in the browser, download at the exact size */
   const PRESETS = [
+    ['iPhone', [['iPhone SE', 750, 1334], ['iPhone 11 / XR', 828, 1792], ['iPhone 12 / 13 / 14 / 16e', 1170, 2532], ['iPhone 14 Plus', 1284, 2778], ['iPhone 15 / 16', 1179, 2556], ['iPhone 15 / 16 Plus', 1290, 2796], ['iPhone 15 Pro', 1179, 2556], ['iPhone 15 Pro Max', 1290, 2796], ['iPhone 16 Pro', 1206, 2622], ['iPhone 16 Pro Max', 1320, 2868]]],
     ['iPad', [['iPad (9th gen)', 1620, 2160], ['iPad (10th gen) / iPad Air 11"', 1640, 2360], ['iPad mini', 1488, 2266], ['iPad Pro 11"', 1668, 2388], ['iPad Air 13" / iPad Pro 12.9"', 2048, 2732], ['iPad Pro 13" (M4)', 2064, 2752]]],
-    ['iPhone', [['iPhone SE', 750, 1334], ['iPhone 12 / 13 / 14', 1170, 2532], ['iPhone 15 / 16', 1179, 2556], ['iPhone 15 / 16 Plus', 1290, 2796], ['iPhone 16 Pro', 1206, 2622], ['iPhone 16 Pro Max', 1320, 2868]]],
-    ['Android', [['Pixel 8 / Galaxy S24', 1080, 2400], ['Pixel 8 Pro', 1344, 2992], ['Galaxy S24 Ultra', 1440, 3120]]],
-    ['Computer', [['Full HD', 1920, 1080], ['QHD', 2560, 1440], ['4K UHD', 3840, 2160], ['MacBook Air 13"', 2560, 1664], ['MacBook Pro 14"', 3024, 1964], ['Ultrawide', 3440, 1440]]]
+    ['Samsung', [['Galaxy S23 / S24 / S25', 1080, 2340], ['Galaxy S24+ / S25+', 1440, 3120], ['Galaxy S23 Ultra / S24 Ultra / S25 Ultra', 1440, 3088], ['Galaxy S24 FE', 1080, 2340], ['Galaxy A15 / A25 / A35 / A55', 1080, 2340], ['Galaxy A16 / A26 / A36 / A56', 1080, 2340], ['Galaxy Z Flip6', 1080, 2640], ['Galaxy Z Fold6 (inside)', 1856, 2160], ['Galaxy Z Fold6 (cover)', 968, 2376], ['Galaxy Tab S9 / S10', 1600, 2560], ['Galaxy Tab S9+ / S10+', 1752, 2800], ['Galaxy Tab S9 Ultra / S10 Ultra', 1848, 2960], ['Galaxy Tab A9+', 1200, 1920]]],
+    ['Google', [['Pixel 7a / 8a', 1080, 2400], ['Pixel 8', 1080, 2400], ['Pixel 8 Pro', 1344, 2992], ['Pixel 9', 1080, 2424], ['Pixel 9 Pro', 1280, 2856], ['Pixel 9 Pro XL', 1344, 2992], ['Pixel 9 Pro Fold (inside)', 2076, 2152], ['Pixel Tablet', 1600, 2560]]],
+    ['Xiaomi / Redmi / POCO', [['Xiaomi 14 / 15', 1200, 2670], ['Xiaomi 14 Ultra / 15 Ultra', 1440, 3200], ['Xiaomi 14T / 14T Pro', 1220, 2712], ['Redmi Note 13 / Note 14', 1080, 2400], ['Redmi Note 13 Pro / Note 14 Pro', 1220, 2712], ['Redmi 13 / 14C', 1080, 2400], ['POCO F6 / F6 Pro', 1220, 2712], ['POCO X6 Pro', 1220, 2712], ['Xiaomi Pad 6', 1800, 2880], ['Redmi Pad SE', 1200, 1920]]],
+    ['OnePlus / OPPO', [['OnePlus 12 / 13', 1440, 3168], ['OnePlus 12R', 1264, 2780], ['OnePlus Nord 4', 1240, 2772], ['OPPO Find X7 Ultra', 1440, 3168], ['OnePlus Pad 2', 2120, 3000]]],
+    ['More Android', [['Nothing Phone (2)', 1080, 2412], ['Nothing Phone (2a) / (3a)', 1084, 2412], ['Motorola Edge 50 Pro', 1220, 2712], ['Motorola Moto G84 / G85', 1080, 2400], ['Sony Xperia 1 VI', 1080, 2340], ['Sony Xperia 10 VI', 1080, 2520], ['Huawei P60 Pro', 1220, 2700], ['Honor Magic6 Pro', 1280, 2800], ['Fairphone 5', 1224, 2700], ['Most Full HD+ phones', 1080, 2400]]],
+    ['Computer', [['Full HD', 1920, 1080], ['QHD', 2560, 1440], ['4K UHD', 3840, 2160], ['MacBook Air 13"', 2560, 1664], ['MacBook Air 15"', 2880, 1864], ['MacBook Pro 14"', 3024, 1964], ['MacBook Pro 16"', 3456, 2234], ['iMac 24"', 4480, 2520], ['Ultrawide', 3440, 1440], ['Steam Deck', 1280, 800]]]
   ];
   const store = { get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} } };
   const fit = Object.assign({ dev: 'iPad (9th gen)', w: 1620, h: 2160, pos: 50 }, store.get('wp-fit') || {});
@@ -423,7 +427,7 @@
     const o = fsel.selectedOptions[0];
     if (o.value !== 'custom') {
       let w = +o.dataset.w, h = +o.dataset.h;
-      if (view.o === 'landscape' && h > w && fsel.value.startsWith('iPad')) [w, h] = [h, w];  // iPads follow the preview format
+      if (view.o === 'landscape' && h > w && h / w < 1.7) [w, h] = [h, w];  // tablets follow the preview format
       Object.assign(fit, { dev: o.value, w, h, pos: 50 });
     } else fit.dev = 'custom';
     syncFitInputs(); saveFit();
