@@ -1,5 +1,6 @@
 """Terrazzo: chips of stone and glass set in a polished binder, the Venetian floor."""
 import numpy as np
+import common
 from PIL import Image, ImageDraw
 from common import hexrgb, mix, fbm, grain, to_image, col
 
@@ -40,7 +41,7 @@ def chip(cx, cy, r, rng):
 
 def render(w, h, v, rng):
     slug, title, fam, binder, chips, dens, motifs = v
-    S = 2
+    S = common.ss(w, h, 2)
     W, H = w * S, h * S
     base = hexrgb(binder)
     # binder: fine speckle of sand plus slow cloudiness

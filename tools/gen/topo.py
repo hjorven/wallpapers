@@ -1,5 +1,6 @@
 """Topographic: contour lines of imaginary terrain, as on a survey map."""
 import numpy as np
+import common
 from common import hexrgb, mix, fbm, to_image, value_noise
 
 ID = "topo"
@@ -63,7 +64,7 @@ def terrain(h, w, rng, feature):
 
 def render(w, h, v, rng):
     slug, title, fam, paper, line, low, high, feature, motifs = v
-    S = 2
+    S = common.ss(w, h, 2)
     W, H = w * S, h * S
     z = terrain(H, W, rng, feature)
     paper_c, line_c = hexrgb(paper), hexrgb(line)

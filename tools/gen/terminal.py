@@ -1,5 +1,6 @@
 """Terminal Core: server halls, rack walls and blinking status lights in cold light."""
 import numpy as np
+import common
 from PIL import Image, ImageDraw
 from common import hexrgb, mix, glow, grain, to_image, col
 
@@ -27,7 +28,7 @@ VARIANTS = [
 
 def render(w, h, v, rng):
     slug, title, fam, room, rack, led, led2, layout, motifs = v
-    S = 2
+    S = common.ss(w, h, 2)
     W, H = w * S, h * S
     s = min(W, H)
     Rm, Rk, L1, L2 = (hexrgb(c) for c in (room, rack, led, led2))

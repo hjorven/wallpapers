@@ -4,6 +4,17 @@ from PIL import Image, ImageDraw, ImageFilter
 
 SIZES = {"quer": (2160, 1620), "hoch": (1620, 2160)}
 
+# Upper limit for supersampled pixels (w * h * S * S). None renders as designed;
+# the browser sets a limit so a phone or iPad does not run out of memory.
+BUDGET = None
+
+
+def ss(w, h, S):
+    """Supersampling factor for a w x h render, lowered while it exceeds BUDGET."""
+    while BUDGET and S > 1 and w * h * S * S > BUDGET:
+        S -= 1
+    return S
+
 
 def hexrgb(h):
     h = h.lstrip("#")
@@ -22,9 +33,9 @@ def value_noise(h, w, cell, rng):
     """Smooth value noise in [0, 1] with roughly `cell` pixels per feature."""
     gh, gw = int(h / cell) + 3, int(w / cell) + 3
     g = rng.random((gh, gw)).astype(np.float32)
-    im = Image.fromarray((g * 65535).astype(np.uint16))
+    im = Image.fromarray(g, mode="F")  # float image: bicubic works in every Pillow version
     im = im.resize((int(gw * cell), int(gh * cell)), Image.BICUBIC)
-    a = np.asarray(im, dtype=np.float32)[:h, :w] / 65535
+    a = np.asarray(im, dtype=np.float32)[:h, :w]
     return np.clip(a, 0, 1)
 
 

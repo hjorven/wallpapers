@@ -1,5 +1,7 @@
 """Silver Face: close-ups of late-1970s hi-fi vacuum fluorescent displays behind smoked glass."""
+from pathlib import Path
 import numpy as np
+import common
 from PIL import Image, ImageDraw, ImageFont
 from common import hexrgb, mix, glow, grain, to_image, col
 
@@ -28,7 +30,8 @@ VARIANTS = [
 SEG = {"0": "abcdef", "1": "bc", "2": "abged", "3": "abgcd", "4": "fgbc", "5": "afgcd",
        "6": "afgedc", "7": "abc", "8": "abcdefg", "9": "abcdfg", "-": "g", " ": ""}
 
-FONT_PATHS = ["/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"]
+FONT_DIR = Path(__file__).resolve().parent / "fonts"
+FONT_PATHS = [str(FONT_DIR / "DejaVuSans-Bold.ttf"), "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"]
 
 
 def font(size):
@@ -83,7 +86,7 @@ def digit(p, x, y, dw, dh, ch, c, slant=0.12):
         p.seg(poly, k in lit, c)
 
 
-LIGHT = ["/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"]
+LIGHT = [str(FONT_DIR / "DejaVuSans.ttf")]
 
 
 def lfont(size):
@@ -239,13 +242,13 @@ UNIT_LABELS = {
 
 def render(w, h, v, rng):
     slug, title, fam, vfd, warm, frame, blocks, motifs = v
-    S = 2
+    S = common.ss(w, h, 2)
     W, H = w * S, h * S
     s = min(W, H)
     V0, R, Fr = hexrgb(vfd), hexrgb(warm), hexrgb(frame)
     V = mix(V0, np.array([235, 255, 250.0]), 0.45)  # real VFDs look pale, almost white-cyan
     land = W > H
-    n = 2 if land else 4
+    n = int(np.clip(round(H / (W / 3.2)), 1, len(UNIT_LABELS)))  # 2 in landscape, 4 in portrait, more on tall phones
     alias = {"levels": "power", "freq": "tuner", "counter": "deck", "signal": "tuner", "clock": "cd", "spectrum": "spectrum"}
     kinds = []
     for k in [alias[b] for b in blocks] + list(UNIT_LABELS):
@@ -265,6 +268,8 @@ def render(w, h, v, rng):
     badge = None
     for ui, kind in enumerate(kinds):
         x0, x1 = gap, W - gap
+        if x1 - x0 > uh * 3.6:  # very wide screens: a centred unit with dark space beside it
+            x0, x1 = W / 2 - uh * 1.8, W / 2 + uh * 1.8
         y0 = gap + ui * (uh + gap)
         y1 = y0 + uh
         uw = x1 - x0
@@ -285,7 +290,8 @@ def render(w, h, v, rng):
         # fine engraved lines across the plate
         dp.line([(x0, y1 - uh * 0.02), (x1, y1 - uh * 0.02)], fill=80, width=max(1, int(s * 0.002)))
         if kind == "power" and badge is None:
-            badge = (x1 - uw * 0.14, y0 + uh * 0.05, x1 - uw * 0.04, y0 + uh * 0.15)
+            bw = max(uw * 0.10, uh * 0.26)
+            badge = (x1 - uw * 0.04 - bw, y0 + uh * 0.05, x1 - uw * 0.04, y0 + uh * 0.15)
     # aluminium
     nb = rng.random((H, max(4, W // 25))).astype(np.float32)
     br = np.asarray(Image.fromarray((nb * 255).astype(np.uint8)).resize((W, H), Image.BILINEAR), np.float32) / 255

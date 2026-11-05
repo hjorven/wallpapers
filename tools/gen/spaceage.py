@@ -1,5 +1,6 @@
 """Space Age: the cheerful rocket future of 1930s to 1950s pulp covers and travel posters."""
 import numpy as np
+import common
 from PIL import Image, ImageDraw
 from common import hexrgb, mix, grain, to_image, col
 
@@ -79,7 +80,7 @@ def ringed_planet(d, cx, cy, R, colour, ring, sky, tilt=0.28, bands=True):
 
 def render(w, h, v, rng):
     slug, title, fam, top, low, planet, body, accent, scene, motifs = v
-    S = 2
+    S = common.ss(w, h, 2)
     W, H = w * S, h * S
     s = min(W, H)
     T, Lo, Pl, Bo, Ac = (hexrgb(c) for c in (top, low, planet, body, accent))

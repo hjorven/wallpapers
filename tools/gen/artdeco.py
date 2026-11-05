@@ -1,5 +1,6 @@
 """Art Deco: fans, sunbursts and stepped towers in metal lines on lacquer."""
 import numpy as np
+import common
 from PIL import Image, ImageDraw
 from common import hexrgb, mix, grain, to_image, col
 
@@ -27,7 +28,7 @@ VARIANTS = [
 
 def render(w, h, v, rng):
     slug, title, fam, ground, metal, tone, layout, motifs = v
-    S = 3
+    S = common.ss(w, h, 3)
     W, H = w * S, h * S
     im = Image.new("RGB", (W, H), col(ground))
     d = ImageDraw.Draw(im)

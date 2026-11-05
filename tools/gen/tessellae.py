@@ -1,5 +1,6 @@
 """Tessellae: Roman floor mosaics laid from small stone cubes."""
 import numpy as np
+import common
 from PIL import Image, ImageDraw
 from common import hexrgb, mix, col
 
@@ -126,7 +127,7 @@ def motif(kind, U, V, w_, h_):
 
 def render(w, h, v, rng):
     slug, title, fam, mortar, ground, c1, c2, c3, kind, motifs = v
-    S = 2
+    S = common.ss(w, h, 2)
     W, H = w * S, h * S
     s = min(W, H)
     t = s / 66.0  # tessera pitch

@@ -1,5 +1,6 @@
 """Azulejo: hand-painted glazed tiles as found on Portuguese facades."""
 import numpy as np
+import common
 from PIL import Image, ImageDraw
 from common import hexrgb, mix, fbm, grain, to_image, col
 
@@ -105,7 +106,7 @@ def motif(d, T, kind, p1, p2, rng):
 
 def render(w, h, v, rng):
     slug, title, fam, glaze, p1, p2, kind, size, motifs = v
-    S = 2
+    S = common.ss(w, h, 2)
     s = min(w, h)
     T = int(round(s * size)) * S
     tile = Image.new("RGB", (T, T), col(glaze))

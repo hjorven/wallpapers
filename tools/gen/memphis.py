@@ -1,5 +1,6 @@
 """Memphis: loud 1980s Milan design. Squiggles, confetti, grids of dots and bold outlines."""
 import numpy as np
+import common
 from PIL import Image, ImageDraw
 from common import hexrgb, col
 
@@ -36,7 +37,7 @@ def squiggle(d, x, y, L, amp, ang, width, fill):
 
 def render(w, h, v, rng):
     slug, title, fam, bg, pal, ink, dens, motifs = v
-    S = 2
+    S = common.ss(w, h, 2)
     W, H = w * S, h * S
     im = Image.new("RGB", (W, H), col(bg))
     d = ImageDraw.Draw(im)

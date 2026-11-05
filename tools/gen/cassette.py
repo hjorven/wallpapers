@@ -1,5 +1,6 @@
 """Cassette Futurism: chunky 1970s and 80s consoles with glowing phosphor screens."""
 import numpy as np
+import common
 from PIL import Image, ImageDraw, ImageFilter
 from common import hexrgb, mix, glow, grain, to_image, col
 
@@ -146,7 +147,7 @@ def screen_content(d, x0, y0, x1, y1, layout, rng, lw, s):
 
 def render(w, h, v, rng):
     slug, title, fam, phos, bezel, accent, layout, motifs = v
-    S = 2
+    S = common.ss(w, h, 2)
     W, H = w * S, h * S
     s = min(W, H)
     P, B, A = hexrgb(phos), hexrgb(bezel), hexrgb(accent)

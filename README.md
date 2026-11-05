@@ -51,6 +51,21 @@ python3 tools/build.py                      # previews, ZIPs, file sizes
 
 A new generated theme is a new file in `tools/gen/` with `ID`, `NAME`, `TAGLINE`, `DESCRIPTION`, `FORMAT`, `VARIANTS`, `render()` and `colour()`, plus its name in the `STYLES` list in `run.py`.
 
+## Any device, any resolution
+
+In the detail view, "Fit to your device" takes a phone, tablet or computer from the list, or a typed
+size. Generated themes are not cropped: the page runs the same Python generator in the browser
+(Pyodide with numpy and Pillow, served from `render/pyodide/`, started by `render/worker.js`) and
+builds the wallpaper anew for that size, so the layout follows the screen. Themes without a generator
+are cropped from the closest stored image. New devices go in the `PRESETS` list in `index.html`.
+
+The same on the command line:
+
+```bash
+python3 tools/gen/make.py silverface-peak-level 1179x2556
+python3 tools/gen/make.py silverface 2560x1440
+```
+
 ## Layout
 
 ```

@@ -1,5 +1,6 @@
 """Silicon Low-Poly: faceted digital landscapes, silicon wafers and gold circuit traces."""
 import numpy as np
+import common
 from PIL import Image, ImageDraw
 from common import hexrgb, mix, fbm, glow, grain, to_image, col
 
@@ -27,7 +28,7 @@ VARIANTS = [
 
 def render(w, h, v, rng):
     slug, title, fam, dark, midc, light, accent, overlay, motifs = v
-    S = 2
+    S = common.ss(w, h, 2)
     W, H = w * S, h * S
     s = min(W, H)
     Dk, Md, Lt, Ac = (hexrgb(c) for c in (dark, midc, light, accent))

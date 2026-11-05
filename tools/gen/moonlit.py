@@ -1,5 +1,6 @@
 """Moonlit Circuits: the quiet night side of a green future. Moon, glowing plants and silver networks."""
 import numpy as np
+import common
 from PIL import Image, ImageDraw
 from common import hexrgb, mix, glow, stars, fbm, grain, to_image, col
 
@@ -40,7 +41,7 @@ def ridge(w, rng, base, amp, freq):
 
 def render(w, h, v, rng):
     slug, title, fam, top, low, hill, plant, metal, motifs = v
-    S = 2
+    S = common.ss(w, h, 2)
     W, H = w * S, h * S
     s = min(W, H)
     T, Lo, Hi, P, M = (hexrgb(c) for c in (top, low, hill, plant, metal))

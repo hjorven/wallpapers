@@ -1,5 +1,6 @@
 """Mechanical Chronometry: gear trains and clockwork drawn in ink on old paper, notebook style."""
 import numpy as np
+import common
 from PIL import Image, ImageDraw
 from common import hexrgb, mix, fbm, grain, to_image, col
 
@@ -73,7 +74,7 @@ def notes(d, x, y, width, rows, ink, rng, size):
 
 def render(w, h, v, rng):
     slug, title, fam, paper, ink, wash, layout, motifs = v
-    S = 2
+    S = common.ss(w, h, 2)
     W, H = w * S, h * S
     s = min(W, H)
     Pp, Ik = hexrgb(paper), hexrgb(ink)

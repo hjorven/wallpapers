@@ -1,5 +1,6 @@
 """Seigaiha: the Japanese pattern of overlapping waves, built from rows of concentric arcs."""
 import numpy as np
+import common
 from common import hexrgb, mix, grain, to_image, fbm
 
 ID = "seigaiha"
@@ -26,7 +27,7 @@ VARIANTS = [
 
 def render(w, h, v, rng):
     slug, title, fam, bg, line, accent, rings, scale, kind, motifs = v
-    S = 2
+    S = common.ss(w, h, 2)
     W, H = w * S, h * S
     bg_c, ln_c = hexrgb(bg), hexrgb(line)
     R = min(w, h) * 0.075 * scale * S

@@ -393,31 +393,98 @@
     const p = fit.pos / 100;
     return { sx: (sw - cw) * p, sy: (sh - ch) * p, cw, ch, sc, axis: cw < sw - 1 ? 'x' : ch < sh - 1 ? 'y' : '' };
   }
+  /* generated themes are built anew for the size by the Python generator (render/worker.js) */
+  const BUDGET = 8e6;  // supersampled pixels; keeps memory low enough for phones and iPads
+  const genOf = w => { const t = themes[w.theme]; return t && t.generator ? { style: w.theme, slug: w.id.slice(w.theme.length + 1) } : null; };
+  let worker = null, busy = false, queue = [], jobN = 0, pyState = 'off';
+  const built = new Map();  // key -> Blob
+  function runJob(job) {
+    return new Promise((resolve, reject) => { queue.push({ job, resolve, reject }); pump(); });
+  }
+  function pump() {
+    if (busy || !queue.length) return;
+    if (!worker) {
+      worker = new Worker('render/worker.js');
+      worker.onmessage = e => {
+        const m = e.data;
+        if (m.kind === 'status') { pyState = 'loading'; drawFit(); return; }
+        const cur = worker.cur; busy = false; worker.cur = null;
+        if (m.kind === 'done') { pyState = 'ready'; cur.resolve(new Blob([m.bytes], { type: 'image/jpeg' })); }
+        else cur.reject(new Error(m.text));
+        pump();
+      };
+      worker.onerror = e => { const cur = worker.cur; busy = false; pyState = 'failed'; if (cur) cur.reject(new Error(e.message || 'worker')); queue.splice(0).forEach(q => q.reject(new Error('worker'))); drawFit(); };
+    }
+    // previews that were overtaken by a newer one are skipped
+    while (queue.length > 1 && queue[0].job.preview && queue.slice(1).some(q => q.job.preview)) queue.shift().reject(new Error('stale'));
+    const q = queue.shift(); busy = true; worker.cur = q;
+    const files = ['common.py', 'make.py', 'fonts/DejaVuSans.ttf', 'fonts/DejaVuSans-Bold.ttf', ...D.themes.filter(t => t.generator).map(t => t.generator.split('/').pop())];
+    worker.postMessage(Object.assign({ id: ++jobN, files, budget: BUDGET }, q.job));
+  }
+  const buildKey = (g, w, h) => `${g.style}/${g.slug}/${w}x${h}`;
+  function getBuilt(g, w, h, preview) {
+    const k = buildKey(g, w, h);
+    if (built.has(k)) return Promise.resolve(built.get(k));
+    return runJob({ style: g.style, slug: g.slug, w, h, preview, quality: preview ? 85 : 93 }).then(b => { built.set(k, b); return b; });
+  }
+  let previewKey = '', previewImg = null, building = false;
+  const previewSize = () => { const k = Math.min(1, 720 / Math.max(fit.w, fit.h)); return [Math.max(64, Math.round(fit.w * k)), Math.max(64, Math.round(fit.h * k))]; };
+  function sizeCanvas(cv) {
+    const ph = Math.round(300 * fit.h / fit.w);
+    cv.width = 300; cv.height = Math.min(ph, 600); if (ph > 600) cv.width = Math.round(600 * fit.w / fit.h);
+  }
   function drawFit() {
     const w = byId[view.id]; if (!w) return;
+    const g = pyState === 'failed' ? null : genOf(w);
+    if (!g) return drawCrop(w, pyState === 'failed' ? 'The Python renderer could not start here, so this is cut from the stored image. ' : '');
+    const cv = $('#f-prev'); sizeCanvas(cv);
+    const ctx = cv.getContext('2d');
+    const [pw, ph] = previewSize(), key = buildKey(g, pw, ph);
+    $('#f-posrow').hidden = true;
+    $('#f-dl').textContent = building ? `Building ${fit.w} × ${fit.h} …` : `Download ${fit.w} × ${fit.h}`;
+    $('#f-dl').disabled = building;
+    if (previewKey === key && previewImg) {
+      ctx.drawImage(previewImg, 0, 0, cv.width, cv.height);
+      $('#f-note').textContent = `Built new for ${fit.w} × ${fit.h} by the Python generator, so the layout follows the screen. Download renders it in full size, which takes a few seconds.`;
+      return;
+    }
+    ctx.fillStyle = '#111'; ctx.fillRect(0, 0, cv.width, cv.height);
+    ctx.fillStyle = '#888'; ctx.font = '13px system-ui, sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText('Building preview …', cv.width / 2, cv.height / 2);
+    $('#f-note').textContent = pyState === 'ready' ? 'Building a preview for this size …' : 'Loading the Python renderer. This happens once and takes a moment (about 28 MB).';
+    if (previewKey === key) return;  // already on its way
+    previewKey = key; previewImg = null;
+    getBuilt(g, pw, ph, true).then(b => createImageBitmap(b)).then(bmp => {
+      if (previewKey !== key) return;
+      previewImg = bmp; drawFit();
+    }).catch(err => { if (err.message !== 'stale' && previewKey === key) { previewKey = ''; if (pyState !== 'failed') { pyState = 'failed'; } drawFit(); } });
+  }
+  function drawCrop(w, prefix) {
     const src = pickSource(w);
     if (srcFor !== src.src) {
       srcFor = src.src; srcImg = null;
       const im = new Image(); im.onload = () => { if (srcFor === src.src) { srcImg = im; drawFit(); } }; im.src = src.src;
     }
     const cv = $('#f-prev'), box = cropBox(src.width, src.height);
-    const pw = 300, ph = Math.round(300 * fit.h / fit.w);
-    cv.width = pw; cv.height = Math.min(ph, 600); if (ph > 600) cv.width = Math.round(600 * fit.w / fit.h);
+    sizeCanvas(cv);
     const ctx = cv.getContext('2d');
     ctx.fillStyle = '#111'; ctx.fillRect(0, 0, cv.width, cv.height);
-    const sk = srcImg ? 1 : 0;
     if (srcImg) ctx.drawImage(srcImg, box.sx, box.sy, box.cw, box.ch, 0, 0, cv.width, cv.height);
     else { const th = $('#d-img'); if (th.complete && th.naturalWidth) { const k = th.naturalWidth / src.width; try { ctx.drawImage(th, box.sx * k, box.sy * k, box.cw * k, box.ch * k, 0, 0, cv.width, cv.height); } catch (e) {} } }
     $('#f-posrow').hidden = !box.axis;
     $('#f-poslabel').textContent = box.axis === 'x' ? 'Left – right' : 'Top – bottom';
     const name = ORIENT[src.orientation] || src.orientation;
     const pct = Math.round((1 - (box.cw * box.ch) / (src.width * src.height)) * 100);
-    let note = `Made from the ${name.toLowerCase()} image (${src.width} × ${src.height})` + (pct > 0 ? `, ${pct}% cut away` : '') + '.';
+    let note = prefix + `Cut from the ${name.toLowerCase()} image (${src.width} × ${src.height})` + (pct > 0 ? `, ${pct}% cut away` : '') + '.';
     if (box.sc > 1.15) note += ` Enlarged ×${box.sc.toFixed(1)}, so it may look a little soft.`;
     $('#f-note').textContent = note;
-    $('#f-dl').disabled = !sk;
+    $('#f-dl').disabled = !srcImg;
     $('#f-dl').textContent = `Download ${fit.w} × ${fit.h}`;
   }
+  const saveBlob = (b, name) => {
+    const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = name;
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  };
   function syncFitInputs() {
     fsel.value = PRESETS.some(([, l]) => l.some(([n]) => n === fit.dev)) ? fit.dev : 'custom';
     $('#f-w').value = fit.w; $('#f-h').value = fit.h; $('#f-pos').value = fit.pos;
@@ -440,16 +507,22 @@
   $('#f-turn').addEventListener('click', () => { [fit.w, fit.h] = [fit.h, fit.w]; fit.pos = 50; syncFitInputs(); saveFit(); });
   $('#f-pos').addEventListener('input', () => { fit.pos = +$('#f-pos').value; saveFit(); });
   $('#f-dl').addEventListener('click', () => {
-    const w = byId[view.id]; if (!w || !srcImg) return;
+    const w = byId[view.id]; if (!w) return;
+    const name = `${w.id}-${fit.w}x${fit.h}.jpg`, g = pyState === 'failed' ? null : genOf(w);
+    if (g) {
+      building = true; drawFit();
+      const t0 = performance.now(), tick = setInterval(() => { $('#f-dl').textContent = `Building ${fit.w} × ${fit.h} … ${Math.round((performance.now() - t0) / 1000)} s`; }, 1000);
+      getBuilt(g, fit.w, fit.h, false).then(b => saveBlob(b, name))
+        .catch(() => { pyState = 'failed'; })
+        .finally(() => { clearInterval(tick); building = false; drawFit(); });
+      return;
+    }
+    if (!srcImg) return;
     const src = pickSource(w), box = cropBox(src.width, src.height);
     const cv = document.createElement('canvas'); cv.width = fit.w; cv.height = fit.h;
     const ctx = cv.getContext('2d'); ctx.imageSmoothingQuality = 'high';
     ctx.drawImage(srcImg, box.sx, box.sy, box.cw, box.ch, 0, 0, fit.w, fit.h);
-    cv.toBlob(b => {
-      if (!b) return;
-      const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = `${w.id}-${fit.w}x${fit.h}.jpg`;
-      document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-    }, 'image/jpeg', 0.93);
+    cv.toBlob(b => { if (b) saveBlob(b, name); }, 'image/jpeg', 0.93);
   });
   syncFitInputs();
 

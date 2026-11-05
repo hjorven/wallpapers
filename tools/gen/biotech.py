@@ -1,5 +1,6 @@
 """Bio-Integrated: living technology. Glowing nerve networks, cells and helices in the dark."""
 import numpy as np
+import common
 from PIL import Image, ImageDraw
 from common import hexrgb, mix, glow, fbm, grain, to_image, col
 
@@ -48,7 +49,7 @@ def branch(d, x, y, ang, length, width, depth, rng, fill, nodes, droop=0.0):
 
 def render(w, h, v, rng):
     slug, title, fam, bg, g1, g2, layout, motifs = v
-    S = 2
+    S = common.ss(w, h, 2)
     W, H = w * S, h * S
     s = min(W, H)
     Bg, C1, C2 = hexrgb(bg), hexrgb(g1), hexrgb(g2)

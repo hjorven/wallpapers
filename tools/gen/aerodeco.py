@@ -1,5 +1,6 @@
 """Aero-Deco: streamlined towers, zeppelins and searchlights, the machine age dressed in chrome."""
 import numpy as np
+import common
 from PIL import Image, ImageDraw
 from common import hexrgb, mix, grain, to_image, col
 
@@ -99,7 +100,7 @@ def zeppelin(d, cx, cy, L, light, dark, accent, flip):
 
 def render(w, h, v, rng):
     slug, title, fam, top, low, light, dark, accent, motifs = v
-    S = 2
+    S = common.ss(w, h, 2)
     W, H = w * S, h * S
     s = min(W, H)
     T, Lo, Li, Dk, Ac = (hexrgb(c) for c in (top, low, light, dark, accent))

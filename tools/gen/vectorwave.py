@@ -1,5 +1,6 @@
 """Vectorwave: glowing wireframe landscapes on black, like early vector arcade games and 3D CAD."""
 import numpy as np
+import common
 from PIL import Image, ImageDraw
 from common import hexrgb, mix, glow, stars, to_image, col
 
@@ -40,7 +41,7 @@ def height(kind, X, Z, rng_off):
 
 def render(w, h, v, rng):
     slug, title, fam, line, sunc, low, kind, motifs = v
-    S = 2
+    S = common.ss(w, h, 2)
     W, H = w * S, h * S
     s = min(W, H)
     L, Sun, Bg = hexrgb(line), hexrgb(sunc), hexrgb(low)
