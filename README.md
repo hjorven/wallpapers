@@ -23,6 +23,16 @@ All themes are made for the iPad (9th generation) Safari start page, 2160 × 162
 | Topographic | Contour lines of invented terrain | 10 |
 | Tessellae | Roman floor mosaics in stone cubes | 10 |
 | Neon Noir | A rainy city at night in neon | 10 |
+| Cassette Futurism | Phosphor screens in beige plastic | 10 |
+| Bio-Integrated | Glowing nerves, cells and helices | 10 |
+| Moonlit Circuits | Glowing plants and silver lines under the moon | 10 |
+| Vectorwave | Wireframe worlds on a black screen | 10 |
+| Space Age | Finned rockets and ringed planets | 10 |
+| Terminal Core | Server halls and blinking racks | 10 |
+| Aero-Deco | Chrome towers and zeppelins | 10 |
+| Mechanical Chronometry | Clockwork sketched on old paper | 10 |
+| Industrial Heavy Metal | Riveted steel and diesel-age paint | 10 |
+| Silicon Low-Poly | Faceted terrain, wafers and gold traces | 10 |
 
 Every theme has landscape and portrait versions of each wallpaper and a ZIP with all of them.
 

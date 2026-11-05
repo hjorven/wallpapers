@@ -73,3 +73,22 @@ def vignette(arr, strength=0.25):
 
 def blur(im, r):
     return im.filter(ImageFilter.GaussianBlur(r))
+
+
+def glow(arr, s, near=0.004, far=0.025, a_near=1.2, a_far=0.9):
+    """Add a soft bloom around bright parts of a float RGB array (for neon and phosphor)."""
+    im = Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8))
+    n = np.asarray(im.filter(ImageFilter.GaussianBlur(max(1, s * near))), np.float32)
+    f = np.asarray(im.filter(ImageFilter.GaussianBlur(max(1, s * far))), np.float32)
+    return arr + n * a_near + f * a_far
+
+
+def stars(arr, rng, count, colour=(255, 255, 255), max_alpha=0.9, region=None):
+    """Sprinkle single-pixel stars of random brightness into a float RGB array."""
+    h, w = arr.shape[:2]
+    y1 = h if region is None else int(region)
+    ys = rng.integers(0, max(1, y1), count)
+    xs = rng.integers(0, w, count)
+    a = (rng.random(count) ** 3 * max_alpha)[:, None]
+    arr[ys, xs] = arr[ys, xs] * (1 - a) + np.array(colour, np.float32) * a
+    return arr
